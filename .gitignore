@@ -25,3 +25,4 @@ dist/
 .vscode/
 assets/datasets
 **/generated/
+**/*gradio*cache*
