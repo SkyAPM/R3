@@ -15,6 +15,7 @@
 Run this file to get a web demo of the URI Drain algorithm.
 """
 import io
+import os
 import sys
 import time
 from collections import defaultdict
@@ -149,7 +150,7 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
                         print(type(file), file)
                         raise gradio.Error('😵 Critical dataset reading error (contact author) 😵')
 
-                    with open(file_path, encoding="utf-8") as f:
+                    with open(os.path.join('demo',file_path), encoding="utf-8") as f:
                         content = f.read()
                     if 'perf_bench' in file_path:
                         return gr.TextArea.update(
@@ -217,6 +218,6 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
     run_button.click(cluster_uris, inputs=[table_preview, shuffle_checkbox, random_seed_text_cell],
                      outputs=[out_tree_text_cell, template_selector, cluster_text_cell, analysis_results_markdown])
 
-demo.queue().launch(server_port=8080, share=False)
+demo.queue().launch(auth=('skywalking', 'skywalking'), server_name='0.0.0.0', server_port=9092, share=False)
 
 # iface.launch()
