@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: MIT
 # This file implements the Drain algorithm for log parsing.
 # Based on https://github.com/logpai/logparser/blob/master/logparser/Drain/Drain.py by LogPAI team
-
 # Again, it's further modified to suit URI clustering needs,
 # changes are kept minimal to avoid divergence from Drain3 upstream.
 # TODO Note:: Every change to upstream Drain3 algorithm MUST be commented starting with "Modified::"
@@ -11,6 +10,10 @@ from typing import List, Dict, Sequence
 from cachetools import LRUCache, Cache
 
 from models.utils.simple_profiler import Profiler, NullProfiler
+
+from models.utils import logger
+
+logger = logger.init_logger(logging_level='DEBUG', name='URIDrainV1')
 
 
 class LogCluster:  # TODO Modified:: Changed to URICluster
@@ -28,18 +31,24 @@ class LogCluster:  # TODO Modified:: Changed to URICluster
         # or http(s)://user:password@www.domain.top_level_domain
         # REASONING:: domain can only appear in the first two tokens, so whenever a dot appears, it must be a domain?
         # Another part of domain handling is done in create_template when they are hiding behind http(s)://
-        if self.log_template_tokens[0] == ':':  # It's a uri scheme!!!
-            template = f"{self.log_template_tokens[0]}//{'/'.join(self.log_template_tokens[1:])}"
-            return f'{template}'
-        if self.log_template_tokens[0].count('.') > 0:
-            template = f"{'/'.join(self.log_template_tokens)}"
-            return f'{template}'
+        if ':' in self.log_template_tokens[0]:  # It's a URI scheme!
+            scheme = self.log_template_tokens[0]
+            path = '/'.join(self.log_template_tokens[1:])
+            # TODO: put this into the config file
+            http_methods = ('OPTIONS', 'GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH')
+            if scheme.startswith(http_methods):
+                template = f"{scheme}/{path}"
+            else:
+                template = f"{scheme}//{path}"
+
+            return template
         else:
             template = '/'.join(self.log_template_tokens)
-            return f'/{template}'
+            return f'{template}'
 
     def __str__(self):
-        return f"ID={str(self.cluster_id).ljust(5)} : size={str(self.size).ljust(10)}: {self.get_template()}"
+        # return f"ID={str(self.cluster_id).ljust(5)} : size={str(self.size).ljust(10)}: {self.get_template()}"
+        return f"size={str(self.size).ljust(10)}: {self.get_template()}"
 
 
 class LogClusterCache(LRUCache):  # TODO Modified:: Changed to URICluster
@@ -112,6 +121,8 @@ class DrainBase:
         self.param_str = param_str
         # MODIFIED:: Added param_extra
         self.param_extra = param_extra
+        # MODIFIED:: extract this to drain.attributes same as sequence similarity method needs this
+        self.possible_params = [self.param_extra['INT'], self.param_extra['STR'], self.param_extra['VAR']]
         self.parametrize_numeric_tokens = parametrize_numeric_tokens
 
         # key: int, value: LogCluster
@@ -156,10 +167,10 @@ class DrainBase:
             if cluster is None:
                 continue
             cur_sim, param_count = self.get_seq_distance(cluster.log_template_tokens, tokens, include_params)
-            # print(f'cur_sim = {cur_sim} for cluster {cluster_id}, '
-            #       f'cluster.log_template_tokens = {cluster.log_template_tokens}')
-            if cur_sim > max_sim or (cur_sim == max_sim and param_count > max_param_count):  # todo: check this is good
-
+            # logger.debug(f'SIMILARITY = {cur_sim} for c{cluster_id}, {cluster.log_template_tokens} param={param_count}')
+            if cur_sim > max_sim or (cur_sim == max_sim and param_count > max_param_count):
+                # todo: this is known caveat
+                # MODIFIED:: Preceding domain should always be the same (Actual code modified in get_seq_distance)
                 # print( f'cur_sim = {cur_sim}, param_count = {param_count}, max_sim = {max_sim}, max_param_count = {
                 # max_param_count}')
                 max_sim = cur_sim
@@ -238,7 +249,7 @@ class DrainBase:
                 self.profiler.start_section("cluster_exist")
             new_template_tokens = self.create_template(content_tokens, match_cluster.log_template_tokens)
             if new_template_tokens == "rejected":
-                print(f'template reuse rejected for content_tokens = {content_tokens} ')
+                # logger.debug(f'template reuse rejected for content_tokens = {content_tokens} ')
                 # added, it should be new template tokens
                 update_type = "rejected (create new)"
                 self.clusters_counter += 1
@@ -342,7 +353,7 @@ class Drain(DrainBase):
         # get best match among all clusters with same prefix, or None if no match is above sim_th
         cluster = self.fast_match(cur_node.cluster_ids, tokens, sim_th, include_params)
         # FIXME MODIFIED:: print for debugging
-        # print("cluster: ", cluster)
+        # #logger.debug("cluster: ", cluster)
         return cluster
 
     def add_seq_to_prefix_tree(self, root_node, cluster: LogCluster):
@@ -377,6 +388,9 @@ class Drain(DrainBase):
 
             # if token not matched in this layer of existing tree.
             if token not in cur_node.key_to_child_node:
+                # MODIFIED:: This is not needed since domain can contain digits
+                # WE SHOULD DO NOTHING SO OVERRIDING THE SETTING
+                self.parametrize_numeric_tokens = False
                 if self.parametrize_numeric_tokens and self.has_numbers(token):
                     if self.param_str not in cur_node.key_to_child_node:
                         new_node = Node()
@@ -412,7 +426,7 @@ class Drain(DrainBase):
             current_depth += 1
 
     # seq1 is a template, seq2 is the log to match
-    # FIXME MODIFIED:: entirely modified for URI matching
+    # FIXME MODIFIED:: entirely modified for URI matching include_params is false when add_logmessage
     def get_seq_distance(self, seq1, seq2, include_params: bool):
         """
         Todo this is modified to match uris
@@ -434,14 +448,20 @@ class Drain(DrainBase):
 
         sim_tokens = 0
         param_count = 0
-
-        for token1, token2 in zip(seq1, seq2):
-            if token1 == self.param_str:  # MODIFIED:: TODO change this to {var} int str ???
+        # TODO:: This needs a second thought
+        # MODIFIED:: modified here to ensure domain is matched
+        for index, (token1, token2) in enumerate(zip(seq1, seq2)):
+            if (index == 0 or index == 1) and '.' in token1 and token1 != token2:
+                # logger.debug('this is domain mismatch!')
+                return 0.0, 0
+            if token1 in self.possible_params or token1 == self.param_str:
                 param_count += 1
                 continue
             if token1 == token2:  # changed here 2023
-                if token1.isalpha():
-                    sim_tokens += 1.01
+                if token1.isdigit() and token2.isdigit():  # this is edge case where template is very new and has digits
+                    sim_tokens += 0.5  # FIXME This maybe tricky to tune, and do we consider token2 or just token1
+                elif token1.isalpha():
+                    sim_tokens += 1
                 else:
                     sim_tokens += 1
         if include_params:
@@ -478,24 +498,22 @@ class Drain(DrainBase):
     def create_template(self, seq1, seq2):
         # MODIFIED:: TODO
         assert len(seq1) == len(seq2)
-        # print(seq1, seq2)
         ret_val = list(seq2)
-        possible_params = [self.param_extra['INT'], self.param_extra['STR'], self.param_extra['VAR']]
         for i, (token1, token2) in enumerate(zip(seq1, seq2)):
-            previous_token = ret_val[i - 1] if i > 0 else None
-            subsequent_token = ret_val[i + 1] if i < len(ret_val) - 1 else None
-
+            pre_token = ret_val[i - 1] if i > 0 else None
+            sub_token = ret_val[i + 1] if i < len(ret_val) - 1 else None
             if token1 != token2:
                 # First handle domains in uri
-                if i == 1 and '.' in previous_token:
+                if i == 1 and ':' in pre_token:  # or check : in pre_token
+                    # logger.debug(f'pre_token = {pre_token}, matched cluster = {seq2}')
+                    # TODO Check: handled in similarity check, remove this ^^^
                     # I assume domain can only appear in either first or second token
                     # domain unhandled can only appear in second token
                     # (scheme://abc:123@blabla.domain.top_level_domain/...)
                     # first token domain is already handled by drain3 since it exact matches first token
                     return 'rejected'
-                # print(f'seq1 = {seq1}')
-                # print(f'seq2 = {seq2}')
-                # print(f'previous_token = {previous_token}')
+                # logger.debug(f'seq1 (incoming uri) = {"/".join(seq1)}')
+                # logger.debug(f'seq2 (matched template) = {"/".join(seq2)}')
                 # TODO These checks are not perfect, but they are good, only very edge cases will trigger a problem
                 # TODO The edge case is when update/123 appears and no other update/xxx appears, then it will not think
                 # TODO that xxx is a param, causing further endpoints looks like it to think the "update" is a param
@@ -511,7 +529,7 @@ class Drain(DrainBase):
                 /api-this-is-a-special-case/v99999999999999999/orders/reorder/122222222222222464643
                 /api-this-is-a-special-case/v99999999999999999/orders/reorder/1222222222222221111111 rejected for
                 content_tokens = ['api-this-is-a-special-case', 'v99999999999999999', 'orders', 'delete',
-                '12222222222222222244'] subsequent_token is param_str, so this cannot be another rejected for
+                '12222222222222222244'] sub_token is param_str, so current token cannot be a param (assumption) rejected for
                 content_tokens = ['api-this-is-a-special-case', 'v99999999999999999', 'orders', 'reorder',
                 '122222222222222464643']"""
 
@@ -519,37 +537,50 @@ class Drain(DrainBase):
                 # Since we change ret_val in each iteration, so when we appear to get two
                 # consecutive tokens that are params ->
                 # Something must be wrong! So we simply reject and return a new template instead of changing old one.
-                """working on token 12222222222222222244 and 123, index 4 previous_token <:STR:> is param_str,
-                so this cannot be another tokens of sequence2 = ('api-this-is-a-special-case', 'v99999999999999999',
+                """working on token 12222222222222222244 and 123, index 4 pre_token <:STR:> is param_str,
+                so current token cannot be a param (assumption) tokens of sequence2 = ('api-this-is-a-special-case', 'v99999999999999999',
                 'orders', 'update', '123') rejected for content_tokens = ['api-this-is-a-special-case',
                 'v99999999999999999', 'orders', 'delete', '12222222222222222244'] working on token
-                122222222222222464643 and 123, index 4 previous_token <:STR:> is param_str, so this cannot be another
+                122222222222222464643 and 123, index 4 pre_token <:STR:> is param_str, so current token cannot be a param (assumption)
                 tokens of sequence2 = ('api-this-is-a-special-case', 'v99999999999999999', 'orders', 'update',
                 '123') rejected for content_tokens = ['api-this-is-a-special-case', 'v99999999999999999', 'orders',
                 'reorder', '122222222222222464643']"""
-                if previous_token == self.param_str or previous_token in possible_params:
-                    # print(f'working on token {token1} and {token2}, index {i}')
-                    # print(f'previous_token {previous_token} is param_str, so this cannot be another')
-                    # print(f'tokens of sequence2 = {seq2}')
+                if pre_token == self.param_str or pre_token in self.possible_params:
+                    # logger.debug(f'working on token {token1} and {token2}, index {i}')
+                    # logger.debug(f'pre_token {pre_token} is param_str, so current token cannot be a param (assumption)')
+                    # logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
-                if subsequent_token == self.param_str or subsequent_token in possible_params:
-                    # print(f'subsequent_token {subsequent_token} is param_str, so this cannot be another')
-                    # print(f'tokens of sequence2 = {seq2}')
+                if sub_token == self.param_str or sub_token in self.possible_params:
+                    # logger.debug(f'sub_token {sub_token} is param_str, so current token cannot be a param (assumption)')
+                    # logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
-                if previous_token is not None and previous_token.startswith('v') and previous_token[1:].isdigit():
-                    # print('previous_token is a version number, so this cannot be another')
-                    # print(f'tokens of sequence2 = {seq2}')
+                if pre_token is not None and pre_token.startswith(
+                        'v') and pre_token[1:].isdigit():
+                    # logger.debug('pre_token is a version number, so current token cannot be a param (assumption)')
+                    # logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
                 if token1.startswith('v') and token1[1:].isdigit():
-                    # print('token1 is a version number, so this cannot be another')
-                    # print(f'tokens of sequence2 = {seq2}')
+                    # logger.debug('token1 is a version number, so current token cannot be a param (assumption)')
+                    # logger.debug(f'tokens of sequence2 = {seq2}')
+                    return "rejected"
+                if pre_token and self.has_numbers(pre_token):
+                    # Based on assumption that no two consecutive tokens can be params
+                    # So attempt to change this position must ensure that the previous token is not a param
+                    # logger.debug('pre_token has numbers, so current token cannot be a param (assumption)')
+                    # logger.debug(f'tokens of sequence2 = {seq2}')
+                    return "rejected"
+                if sub_token and self.has_numbers(sub_token):
+                    # Based on assumption that no two consecutive tokens can be params
+                    # So attempt to change this position must ensure that the subsequent token is not a param
+                    # logger.debug('sub_token has numbers, so current token cannot be a param (assumption)')
+                    # logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
                 # TODO Check {var} {str} {int}, they must not override!!!
                 """
                 match: ID=5     : size=33        : api/v1/invoices/{VAR}
                 seq1 = ['api', 'v1', 'invoices', 'abcxyz']
                 seq2 = ('api', 'v1', 'invoices', '{VAR}')
-                previous_token = invoices
+                pre_token = invoices
                 Input (602): /api/v1/invoices/abcxyz
                 Result: {"change_type": "cluster_template_changed", "cluster_id": 5, "cluster_size": 34,
                 "template_mined": "api/v1/invoices/{STR}", "cluster_count": 30}
@@ -562,8 +593,9 @@ class Drain(DrainBase):
                         ret_val[i] = self.param_extra['VAR']
                     elif ret_val[i] == self.param_extra['VAR']:
                         continue
-                    else:
-                        ret_val[i] = self.param_extra['INT']
+                    else:  # return val is a plain segment, it can be any type, need to check
+                        # We enforce a cautionary approach.
+                        ret_val[i] = self.param_extra['INT'] if ret_val[i].isdigit() else self.param_extra['VAR']
                 elif token1.isalpha():
                     if ret_val[i] == self.param_extra['INT']:
                         ret_val[i] = self.param_extra['VAR']
@@ -572,7 +604,7 @@ class Drain(DrainBase):
                     elif ret_val[i] == self.param_extra['VAR']:
                         continue
                     else:
-                        ret_val[i] = self.param_extra['STR']
+                        ret_val[i] = self.param_extra['STR'] if ret_val[i].isalpha() else self.param_extra['VAR']
                 else:
                     if ret_val[i] == self.param_extra['INT']:
                         ret_val[i] = self.param_extra['VAR']
@@ -582,6 +614,8 @@ class Drain(DrainBase):
                         continue
                     else:
                         ret_val[i] = self.param_extra['VAR']
+        # logger.debug(f'After change: {ret_val}')
+
         return ret_val
 
     def match(self, content: str, full_search_strategy="never"):

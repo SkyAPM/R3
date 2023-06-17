@@ -48,6 +48,10 @@ def cluster_uris(table: str, shuffle, seed):  # already loaded into a string
         dataset = dataset.sample(frac=1, random_state=int(seed))
     global clusters
     global cluster_templates
+    global uri_to_cluster
+    uri_to_cluster = defaultdict(list)
+    cluster_templates = []
+    clusters = ''
     config = TemplateMinerConfig()
     config.load(dirname(__file__) + "/uri_drain.ini")
     template_miner = TemplateMiner(config=config)
@@ -77,7 +81,8 @@ def cluster_uris(table: str, shuffle, seed):  # already loaded into a string
     # Get clusters
     clusters = template_miner.drain.clusters
 
-    sorted_clusters = sorted(template_miner.drain.clusters, key=lambda it: it.size, reverse=True)
+    sorted_clusters = sorted(template_miner.drain.clusters, key=lambda it: (it.size, len(it.get_template())),
+                             reverse=True)
 
     cluster_templates = [f'{cluster.cluster_id}::{cluster.get_template()} (Size={cluster.size})' for cluster in
                          sorted_clusters]
@@ -85,13 +90,15 @@ def cluster_uris(table: str, shuffle, seed):  # already loaded into a string
     def get_regex(cluster):
         return template_miner._get_template_parameter_extraction_regex(cluster.get_template(), exact_matching=True)
 
-    sorted_clusters_with_regex: str = '\n'.join(f'Cluster:: {str(cluster)}\nREGEX:: {get_regex(cluster)}'
+    sorted_clusters_without_regex = '\n'.join(f'Cluster:: {str(cluster)}'
+                                              for cluster in sorted_clusters)
+    sorted_clusters_with_regex: str = '====\n\n'.join(f'Cluster:: {str(cluster)}\nREGEX:: {get_regex(cluster)}'
                                                 for cluster in sorted_clusters)
-    endpoint_per_second = int(dataset_size // (time_taken+0.01))  # avoid 0 division
-    timer_update = gr.Markdown.update(value=f'### 🔗 URI Analysis Results **Time taken - {time_taken:.3f} seconds || '
-                                            f'{endpoint_per_second} endpoints/s**')
+    endpoint_per_second = int(dataset_size // (time_taken + 0.01))  # avoid 0 division
+    timer_update = gr.Markdown.update(value=f'### 🔗 URI Analysis Results **| Time taken - {time_taken:.3f} seconds || '
+                                            f'{endpoint_per_second} endpoints/s**, **{len(sorted_clusters)}** clusters')
     template_dropdown_update = gr.Dropdown.update(choices=cluster_templates)
-    return printed_tree_max1000, template_dropdown_update, sorted_clusters_with_regex, timer_update
+    return printed_tree_max1000, template_dropdown_update, sorted_clusters_without_regex, timer_update
 
 
 with gr.Blocks(theme=gr.themes.Default()) as demo:
@@ -150,7 +157,8 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
                         print(type(file), file)
                         raise gradio.Error('😵 Critical dataset reading error (contact author) 😵')
 
-                    with open(os.path.join('demo', file_path), encoding="utf-8") as f:
+                    script_dir = os.path.dirname(os.path.abspath(__file__))
+                    with open(os.path.join(script_dir, file_path), encoding="utf-8") as f:
                         content = f.read()
                     if 'perf_bench' in file_path:
                         return gr.TextArea.update(
@@ -193,7 +201,9 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
 
             def populate_dropdown(selected_template):
                 cluster_id_selected = int(selected_template.split('::')[0])
+                global uri_to_cluster
                 uris = uri_to_cluster[str(cluster_id_selected)]
+                print(f'Extracting uris for cluster {cluster_id_selected}, size {len(uris)}')
                 return '\n'.join(uris)
 
 
@@ -211,13 +221,15 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
     gr.Markdown("### 🔗 Sorted Clusters and Extracted REGEX")
 
     cluster_text_cell = gr.TextArea(interactive=False, show_copy_button=True,
-                                    label='🔽 Sorted by size (p_N is match group)')
+                                    label='🔽 Sorted by size and length (p_N is match group)')
 
     shuffle_checkbox.select(update_shuffle_state, inputs=[shuffle_checkbox, random_seed_text_cell],
                             outputs=[table_preview_markdown])
     run_button.click(cluster_uris, inputs=[table_preview, shuffle_checkbox, random_seed_text_cell],
                      outputs=[out_tree_text_cell, template_selector, cluster_text_cell, analysis_results_markdown])
 
-demo.queue().launch(auth=('skywalking', 'skywalking'), server_name='0.0.0.0', server_port=9092, share=False)
+auth = ('skywalking', 'skywalking')
+# server_name='localhost',
+demo.queue().launch(server_port=9092, share=False)
 
 # iface.launch()
