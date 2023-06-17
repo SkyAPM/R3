@@ -7,8 +7,8 @@ RESTful Pattern Recognition(R3) for Apache SkyWalking AI pipeline.
 To run a demo of the algorithm (integration is pending to SkyWalking):
 
 1. Install the dependencies with `make env`
-2. CD into this folder and run `python demo_gradio.py`
-3. Open `http://localhost:8080` in your browser or access through remote gradio url from the web.
+2. CD into this folder and run `python demo/demo_gradio.py`
+3. Open `http://localhost:8080` in your browser or access through remote gradio url from the web by setting `launch(share=True)`
 4. Enjoy!
 
 ### Algorithm: URIDrain
