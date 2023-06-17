@@ -34,6 +34,6 @@ header:
     - '**/*venv*'
     - '.git*'
     - '.idea*'
-    - 'models*'  # TODO: should be changed to drain3-related only, match not working on windows (\\) vs (/)?
+    - 'models'  # TODO: should be changed to drain3-related only, match not working on windows (\\) vs (/)?
 
   comment: on-failure

@@ -150,7 +150,7 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
                         print(type(file), file)
                         raise gradio.Error('😵 Critical dataset reading error (contact author) 😵')
 
-                    with open(os.path.join('demo',file_path), encoding="utf-8") as f:
+                    with open(os.path.join('demo', file_path), encoding="utf-8") as f:
                         content = f.read()
                     if 'perf_bench' in file_path:
                         return gr.TextArea.update(
