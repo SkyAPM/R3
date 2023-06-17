@@ -11,30 +11,3 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
-
-header:
-  license:
-    spdx-id: Apache-2.0
-    copyright-owner: SkyAPM org
-
-  paths-ignore:
-    - 'dist'
-    - '**/*.md'
-    - 'LICENSE'
-    - 'NOTICE'
-    - '.github/*_TEMPLATE'
-    - '.gitignore'
-    - '**/*.json'
-    - '**/*.ipynb'
-    - '**/*.lock'
-    - '**/*.csv'
-    - '**/*.txt'
-    - '**/*.log'
-    - '**/*.ini'
-    - '**/*venv*'
-    - '.git*'
-    - '.idea*'
-    - 'models'  # TODO: should be changed to drain3-related only, match not working on windows (\\) vs (/)?
-    - '**/*.proto'
-
-  comment: on-failure

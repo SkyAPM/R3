@@ -23,8 +23,12 @@ else
     OS := $(shell sh -c 'uname 2>/dev/null || echo Unknown')
 endif
 
+.PHONY: all
+gen:
+	poetry run python -m tools.grpc_gen
+
 .PHONY: env
-env: poetry
+env: poetry gen
 	poetry install --all-extras
 	poetry run pip install --upgrade pip
 
@@ -43,6 +47,7 @@ ifeq ($(OS),Windows)
 	poetry self update
 else
 	-curl -sSL https://install.python-poetry.org | python3 -
+	export PATH="$HOME/.local/bin:$PATH"
 	poetry self update || $(MAKE) poetry-fallback
 endif
 
