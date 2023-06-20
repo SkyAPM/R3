@@ -82,6 +82,7 @@ for stat in top_stats[:5]:
 tracemalloc.stop()
 
 sorted_clusters = sorted(template_miner.drain.clusters, key=lambda it: it.size, reverse=True)
+print(f'Got {len(sorted_clusters)} clusters')
 for cluster in sorted_clusters:
     print(cluster)
     extracted_regex = template_miner._get_template_parameter_extraction_regex(

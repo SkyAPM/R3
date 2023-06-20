@@ -84,7 +84,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/12222223/similar-to-these-single-occurrence-is-not-handled-correctly-will-be-handled-by-nltk!!!!!
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 http://www.google.com/api/v1/users/123
 http://www.amazon.com/api/v1/users/456
 http://www.google.com/api/v1/users/abc

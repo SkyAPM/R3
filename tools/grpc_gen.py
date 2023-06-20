@@ -70,7 +70,7 @@ def codegen(proto_location: str):
 
 
 if __name__ == '__main__':
-    for proto_name, proto_path in protos(src_dir='server'):
+    for proto_name, proto_path in protos(src_dir='servers'):
         if proto_name == 'empty.proto':
             print('Skipping `empty.proto` since its a hacky workaround for grpcio-tools')
             continue

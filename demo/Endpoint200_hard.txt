@@ -165,3 +165,6 @@ special.helloword.com/api/v1/users/123ada
 top1.abc.example.com.net.cn/api/v1/users/badwdw
 top1.abc.example.com.net.cn/api/v1/users/this-url-is-special-since-domain-hasdigits
 GET:/api/v2/users/1222222223/similar-to-these-single-occurrence-is-not-handled-correctly-will-be-handled-by-nltk!!!!!
+/haha1
+/haha2
+/jdoia1
