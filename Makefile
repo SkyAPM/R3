@@ -51,6 +51,11 @@ else
 	poetry self update || $(MAKE) poetry-fallback
 endif
 
+.PHONY: gen-basic
+gen-basic:
+	python3 -m pip install grpcio-tools packaging
+	python3 -m tools.grpc_gen
+
 .PHONY: install
 install: gen-basic
 	python3 -m pip install --upgrade pip

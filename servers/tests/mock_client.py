@@ -147,7 +147,7 @@ async def run() -> None:
         start_time = time.time()
         print('-------------- WAITING FOR SENDING 1000 SERVICES ---------------')
 
-        for i in range(100):
+        for i in range(10):
             mock_data_list = get_mock_data()
             unrecognized_uris = [HttpRawUri(name=uri) for uri in mock_data_list]
             mock_service_list = f'test_service_{i}'
@@ -163,7 +163,7 @@ async def run() -> None:
         print('-------------- WAITING FOR FETCHING PATTERN ---------------')
         time.sleep(1)
         start = time.time()
-        for i in range(100):
+        for i in range(10):
             request = ai_http_uri_recognition_pb2.HttpUriRecognitionSyncRequest(
                 service=f'test_service_{i}',
                 version='NULL',

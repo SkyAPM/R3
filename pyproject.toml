@@ -31,12 +31,26 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
 ]
 
+
+packages = [
+    { include = "servers" },
+    { include = "models" }
+]
+
+# poetry will ignore generated files as .gitignore, but we need them in package
+include = ['servers/protos/**/*']
+exclude = ['tests']
+
+
 [tool.poetry.urls]
 "Issues Tracker" = "https://github.com/apache/skywalking/issues"
 "Documentation" = "TBD"
 
 [tool.poetry.scripts]
 # entry point for the CLI
+
+[tool.poetry.build]
+generate-setup-file = true
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"  # Gradio needs 3.8+
@@ -47,6 +61,7 @@ cachetools = "^5.3.1"
 nltk = "^3.8.1"
 inflect = "^6.0.4"
 pytest = "^7.3.2"
+
 
 
 [tool.poetry.dev-dependencies]
@@ -78,5 +93,5 @@ flake8-2020 = "^1.7.0"
 gradio = "^3.35.2"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
