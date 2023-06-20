@@ -19,6 +19,7 @@ from servers.simple.results_manager import ProxyURIDrainResultsManager, URIDrain
 
 
 def run():
+    print('Starting server from entrypoint...')
     ProxyURIDrainResultsManager.register("URIDrainResults", URIDrainResults)
 
     manager = ProxyURIDrainResultsManager()
