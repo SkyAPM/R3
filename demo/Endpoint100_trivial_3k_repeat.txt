@@ -97,7 +97,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -197,7 +197,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -297,7 +297,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -397,7 +397,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -497,7 +497,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -597,7 +597,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -697,7 +697,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -797,7 +797,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -897,7 +897,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -997,7 +997,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1097,7 +1097,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1197,7 +1197,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1297,7 +1297,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1397,7 +1397,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1497,7 +1497,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1597,7 +1597,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1697,7 +1697,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1797,7 +1797,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1897,7 +1897,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -1997,7 +1997,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2097,7 +2097,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2197,7 +2197,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2297,7 +2297,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2397,7 +2397,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2497,7 +2497,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2597,7 +2597,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2697,7 +2697,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2797,7 +2797,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2897,7 +2897,7 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234
 /api/v1/users/123
 /api/v1/users/456
 /api/v1/users/789
@@ -2997,4 +2997,4 @@ GET:/api/v1/users/123
 GET:/api/v1/users/abc
 GET:/api/v2/users/123
 POST:/api/v1/users/1231343
-FETCH:/api/v1/users/123234
+PATCH:/api/v1/users/123234

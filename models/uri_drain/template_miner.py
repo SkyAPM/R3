@@ -51,12 +51,13 @@ class TemplateMiner:
         self.persistence_handler = persistence_handler
 
         # MODIFIED:: for URI Drain < It is now a dict not string since contains multiple types
-        param_str = f"{self.config.mask_prefix}*{self.config.mask_suffix}"
-        param_extra = {
-            'INT': f"{self.config.mask_prefix}INT{self.config.mask_suffix}",
-            'STR': f"{self.config.mask_prefix}STR{self.config.mask_suffix}",
-            'VAR': f"{self.config.mask_prefix}VAR{self.config.mask_suffix}",  # FIXME Use var or use *?
-        }
+        param_str = f"{self.config.mask_prefix}var{self.config.mask_suffix}"
+        # Below is removed temporarily since its not needed for SkyWalking use case
+        # param_extra = {
+        #     'INT': f"{self.config.mask_prefix}INT{self.config.mask_suffix}",
+        #     'STR': f"{self.config.mask_prefix}STR{self.config.mask_suffix}",
+        #     'VAR': f"{self.config.mask_prefix}VAR{self.config.mask_suffix}",  # FIXME Use var or use *?
+        # }
         # Follow the configuration in the configuration file to instantiate Drain
         # target_obj will be "Drain" if the engine argument is not specified.
         target_obj = self.config.engine
@@ -71,7 +72,7 @@ class TemplateMiner:
             extra_delimiters=self.config.drain_extra_delimiters,
             profiler=self.profiler,
             param_str=param_str,
-            param_extra=param_extra,  # MODIFIED:: for URI Drain < It is now a dict since contains multiple types
+            # param_extra=param_extra,  # MODIFIED:: for URI Drain < It is now a dict since contains multiple types
             parametrize_numeric_tokens=self.config.parametrize_numeric_tokens
         )
 
@@ -295,12 +296,12 @@ class TemplateMiner:
                 allowed_patterns.append(r".+?")
 
             # MODIFIED:: FOR URI DRAIN
-            if _mask_name == 'INT':
-                allowed_patterns.append(r"\d+")
-            if _mask_name == 'STR':
-                allowed_patterns.append(r"[a-zA-Z]+")
-            if _mask_name == 'VAR':  # TODO: change this back to *
-                allowed_patterns.append(r".+?")
+            # if _mask_name == 'INT':
+            #     allowed_patterns.append(r"\d+")
+            # if _mask_name == 'STR':
+            #     allowed_patterns.append(r"[a-zA-Z]+")
+            # if _mask_name == 'VAR':  # TODO: change this back to *
+            #     allowed_patterns.append(r".+?")
             # Give each capture group a unique name to avoid conflicts.
             param_group_name = get_next_param_name()
             param_group_name_to_mask_name[param_group_name] = _mask_name
@@ -315,9 +316,10 @@ class TemplateMiner:
         # the Drain catch-all mask
         mask_names.add("*")
         # MODIFIED:: FOR URI DRAIN
-        mask_names.add('INT')
-        mask_names.add('STR')
-        mask_names.add('VAR')
+        # REMOVED TEMP
+        # mask_names.add('INT')
+        # mask_names.add('STR')
+        # mask_names.add('VAR')
 
         escaped_prefix = re.escape(self.masker.mask_prefix)
         escaped_suffix = re.escape(self.masker.mask_suffix)
