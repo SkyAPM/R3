@@ -22,10 +22,10 @@ def get_mock_data():
     in_file = 'Endpoint100_trivial_3k_repeat.txt'
     with open(os.path.join(script_dir, in_file)) as f:
         endpoints = f.read().splitlines()
-        #counter = Counter(endpoints)
+        # counter = Counter(endpoints)
 
-        #counter_list = list(counter.keys())
-        #print(f'count of counter_list: {len(counter_list)}')
+        # counter_list = list(counter.keys())
+        # print(f'count of counter_list: {len(counter_list)}')
     return endpoints
 
 
