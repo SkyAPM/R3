@@ -13,6 +13,7 @@
 #  limitations under the License.
 
 import asyncio
+import sys
 from concurrent import futures
 
 import grpc
@@ -36,6 +37,8 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
         self.uri_main_queue = uri_main_queue
 
     async def fetchAllPatterns(self, request, context):
+        # TODO OAP SIDE OR THIS SIDE must save the version, e.g. oap should check if version is > got version,  since
+        #  this is a stateful service and it may crash and restart
         print('-================-')
         print(
             f'> Received fetchAllPatterns request for service <{request.service}>, '
@@ -43,7 +46,7 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
 
         version = str(self.shared_results_object.get_version(service=request.service))
         if version == '0':
-            version = 'NULL'  # Expected on OAP side, temp fix
+            version = 'NULL'  # OAP side is NULL, so we must not return NULL otherwise it will always be NULL
 
         # https://github.com/apache/skywalking/blob/master/oap-server/ai-pipeline/src/main/java/org
         # /apache/skywalking/oap/server/ai/pipeline/services/HttpUriRecognitionService.java#LL39C32-L39C32
@@ -53,7 +56,13 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
 
         print(f'Version do not match, local:{version} vs oap:{request.version}')
 
-        patterns = [Pattern(pattern=cluster) for cluster in self.shared_results_object.get_dict_field(request.service)]
+        cluster_candidates = self.shared_results_object.get_dict_field(request.service)
+        patterns = []
+        for cluster in cluster_candidates:
+            if '{var}' in cluster:
+                patterns.append(Pattern(pattern=cluster))
+            else:  # TODO this is for post processing feature to be added
+                print("Skipping pattern without {var}, OAP won't need this")
         print(f'Returning {len(patterns)} patterns')
 
         print('-================-')
@@ -63,8 +72,13 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
     async def feedRawData(self, request, context):
         """
         Offload CPU intensive work to a separate process via a queue
+
+        There will always be a User service, its in topology, but it will not call fetchAllPatterns
         """
         print(f'> Received feedRawData request for service {request.service}')
+        if request.service == 'User':
+            # It should not be called
+            return Empty()
         uris = [str(uri.name) for uri in request.unrecognizedUris]
         service = str(request.service)
         self.uri_main_queue.put((uris, service))
@@ -87,7 +101,42 @@ async def serve(uri_main_queue, shared_results_object):
 
 
 def run_server(uri_main_queue, shared_results_object):
-    asyncio.run(serve(uri_main_queue=uri_main_queue, shared_results_object=shared_results_object))
+    loop = asyncio.get_event_loop()
+    try:
+        # Here `amain(loop)` is the core coroutine that may spawn any
+        # number of tasks
+        sys.exit(loop.run_until_complete(serve(uri_main_queue, shared_results_object)))
+    except KeyboardInterrupt:
+        # Optionally show a message if the shutdown may take a while
+        print("Attempting graceful shutdown, press Ctrl+C again to exit…", flush=True)
+
+        quit()
+        # TODO Handle interrupt and gracefully shutdown
+        """
+        Learn from this
+        https://stackoverflow.com/questions/30765606/whats-the-correct-way-to-clean-up-after-an-interrupted-event-loop
+        """
+        # Do not show `asyncio.CancelledError` exceptions during shutdown
+        # (a lot of these may be generated, skip this if you prefer to see them)
+        def shutdown_exception_handler(loop, context):
+            if "exception" not in context \
+                    or not isinstance(context["exception"], asyncio.CancelledError):
+                loop.default_exception_handler(context)
+
+        loop.set_exception_handler(shutdown_exception_handler)
+
+        # Handle shutdown gracefully by waiting for all tasks to be cancelled
+        tasks = asyncio.gather(*asyncio.all_tasks(loop=loop), return_exceptions=True)
+        tasks.add_done_callback(lambda t: loop.stop())
+        tasks.cancel()
+
+        # Keep the event loop running until it is either destroyed or all
+        # tasks have really terminated
+        while not tasks.done() and not loop.is_closed():
+            loop.run_forever()
+    finally:
+        loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()
 
 
 if __name__ == '__main__':

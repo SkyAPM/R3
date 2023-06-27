@@ -29,8 +29,9 @@ class LogCluster:  # TODO Modified:: Changed to URICluster
         # or http(s)://user:password@www.domain.top_level_domain
         # REASONING:: domain can only appear in the first two tokens, so whenever a dot appears, it must be a domain?
         # Another part of domain handling is done in create_template when they are hiding behind http(s)://
-        if ':' in self.log_template_tokens[0]:  # It's a URI scheme!
-            scheme = self.log_template_tokens[0]
+        first_token = self.log_template_tokens[0]
+        if ':' in first_token:  # It's a URI scheme!
+            scheme = first_token
             path = '/'.join(self.log_template_tokens[1:])
             # TODO: put this into the config file
             http_methods = ('OPTIONS', 'GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'TRACE', 'CONNECT')
@@ -40,9 +41,11 @@ class LogCluster:  # TODO Modified:: Changed to URICluster
                 template = f"{scheme}//{path}"
 
             return template
+        elif first_token[0].isupper() or '.' in first_token:  # It's something like HikariCP/Connection/getConnection
+            return '/'.join(self.log_template_tokens)
         else:
             template = '/'.join(self.log_template_tokens)
-            return f'{template}'
+            return f'/{template}'
 
     def __str__(self):
         # return f"ID={str(self.cluster_id).ljust(5)} : size={str(self.size).ljust(10)}: {self.get_template()}"

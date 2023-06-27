@@ -168,3 +168,9 @@ GET:/api/v2/users/1222222223/similar-to-these-single-occurrence-is-not-handled-c
 /haha1
 /haha2
 /jdoia1
+HikariCP/Connection/getConnection
+HikariCP/Connection/disconnect
+HikariCP/Connection/close
+ABC/123
+ABC/456
+ABC/789

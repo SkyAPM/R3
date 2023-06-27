@@ -35,6 +35,7 @@ def run_worker(uri_main_queue, shared_results_object):
             uri_package = uri_main_queue.get()
             print('====================')
             print(f'currently have drain instances for {len(drain_instances)} services')
+            print(f'drain_instances.keys() = {drain_instances.keys()}')
             print('-================-')
             uris, service = uri_package[0], uri_package[1]
             # print(uri_main_queue.get(timeout=1))
