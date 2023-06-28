@@ -230,6 +230,6 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
 
 auth = ('skywalking', 'skywalking')
 # server_name='localhost',
-demo.queue().launch(server_port=9092, share=False)
+demo.queue().launch(server_port=8080, share=False)
 
 # iface.launch()
