@@ -484,7 +484,7 @@ class Drain(DrainBase):
         # /api/getconnection
         # /api/dropconnection
         if seq_length == 2:
-            if (seq1[0] == seq2[0] and seq1[1] != seq2[1] # can be simplified
+            if (seq1[0] == seq2[0] and seq1[1] != seq2[1]  # can be simplified
                     and not self.has_numbers(seq1[1]) and not self.has_numbers(seq2[1])):
                 print(f'first token match but second token mismatch, seq1 = {seq1}, seq2 = {seq2}')
                 return 'rejected'
