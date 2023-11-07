@@ -17,7 +17,7 @@ name: publish-docker
 on:
   push:
     branches:
-      - master
+      - main
   release:
     types:
       - released
