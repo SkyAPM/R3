@@ -472,21 +472,45 @@ class Drain(DrainBase):
             sim_tokens += param_count
 
         ret_val = float(sim_tokens) / len(seq1)
-
         return ret_val, param_count
 
     def create_template(self, seq1, seq2):
         # MODIFIED::
         assert len(seq1) == len(seq2)
         ret_val = list(seq2)
+        seq_length = len(seq1)
+
+        # SPECIAL ASSUMPTION THAT MIGHT BE FALSE::
+        # /api/getconnection
+        # /api/dropconnection
+        if seq_length == 2:
+            if (seq1[0] == seq2[0] and seq1[1] != seq2[1] # can be simplified
+                    and not self.has_numbers(seq1[1]) and not self.has_numbers(seq2[1])):
+                print(f'first token match but second token mismatch, seq1 = {seq1}, seq2 = {seq2}')
+                return 'rejected'
+        # TODO, radical assumption if there's absolutely 0 digit in seq1 and seq2, then don't consider them similar?
+        # To implement this, we increase the false negative rate, but decrease false positive rate
+
         for i, (token1, token2) in enumerate(zip(seq1, seq2)):
             pre_token = ret_val[i - 1] if i > 0 else None
             sub_token = ret_val[i + 1] if i < len(ret_val) - 1 else None
             if token1 != token2:
-                if len(seq1) == 1:  # if an uri is of length 1 then it must not share any similarity with any template
+                if seq_length == 1:  # if an uri is of length 1 then it must not share any similarity with any template
                     return 'rejected'
+                if seq_length == 2:
+                    # This is to handle cases of
+                    # [0]same_domain/[1]FIRST_ACTUAL_TOKEN or
+                    # here we assume that FIRST_ACTUAL_TOKEN is not a param,
+                    # so we safely reject if they don't match
+                    if i == 1 and '.' in pre_token:
+                        return 'rejected'
+                if seq_length == 3:
+                    # [0]scheme://[1]same_domain/[2]FIRST_ACTUAL_TOKEN,
+                    if i == 2 and '.' in pre_token:
+                        return 'rejected'
                 # First handle domains in uri
-                if i == 1 and ':' in pre_token:  # or check : in pre_token
+                if i == 1 and ':' in pre_token:  # it means domain mismatch
+                    # [0]scheme://[1]same_domain/[2]FIRST_ACTUAL_TOKEN,
                     # self.logger.debug(f'pre_token = {pre_token}, matched cluster = {seq2}')
                     # TODO Check: handled in similarity check, remove this ^^^
                     # I assume domain can only appear in either first or second token
@@ -527,6 +551,8 @@ class Drain(DrainBase):
                 tokens of sequence2 = ('api-this-is-a-special-case', 'v99999999999999999', 'orders', 'update',
                 '123') rejected for content_tokens = ['api-this-is-a-special-case', 'v99999999999999999', 'orders',
                 'reorder', '122222222222222464643']"""
+
+                # ASSUMPTION: There cannot be two consecutive params
                 if pre_token == self.param_str:  # or pre_token in self.possible_params:
                     # self.logger.debug(f'working on token {token1} and {token2}, index {i}')
                     # self.logger.debug(f'pre_token {pre_token} is param_str, so current token cannot be a param (assumption)')
@@ -536,6 +562,7 @@ class Drain(DrainBase):
                     # self.logger.debug(f'sub_token {sub_token} is param_str, so current token cannot be a param (assumption)')
                     # self.logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
+                # ASSUMPTION: A subsequent token to version number cannot be a param
                 if pre_token is not None and pre_token.startswith(
                         'v') and pre_token[1:].isdigit():
                     # self.logger.debug('pre_token is a version number, so current token cannot be a param (assumption)')
@@ -558,40 +585,9 @@ class Drain(DrainBase):
                     # self.logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
 
-                # REMOVED FOR NOW, not used in SkyWalking
-                # REPLACED WITH SIMPLE APPROACH
                 ret_val[i] = self.param_str
-                # TODO refactor this, now its just for poc and clarity
-                # if token1.isdigit():
-                #     if ret_val[i] == self.param_extra['INT']:
-                #         continue
-                #     elif ret_val[i] == self.param_extra['STR']:
-                #         ret_val[i] = self.param_extra['VAR']
-                #     elif ret_val[i] == self.param_extra['VAR']:
-                #         continue
-                #     else:  # return val is a plain segment, it can be any type, need to check
-                #         # We enforce a cautionary approach.
-                #         ret_val[i] = self.param_extra['INT'] if ret_val[i].isdigit() else self.param_extra['VAR']
-                # elif token1.isalpha():
-                #     if ret_val[i] == self.param_extra['INT']:
-                #         ret_val[i] = self.param_extra['VAR']
-                #     elif ret_val[i] == self.param_extra['STR']:
-                #         continue
-                #     elif ret_val[i] == self.param_extra['VAR']:
-                #         continue
-                #     else:
-                #         ret_val[i] = self.param_extra['STR'] if ret_val[i].isalpha() else self.param_extra['VAR']
-                # else:
-                #     if ret_val[i] == self.param_extra['INT']:
-                #         ret_val[i] = self.param_extra['VAR']
-                #     elif ret_val[i] == self.param_extra['STR']:
-                #         ret_val[i] = self.param_extra['VAR']
-                #     elif ret_val[i] == self.param_extra['VAR']:
-                #         continue
-                #     else:
-                #         ret_val[i] = self.param_extra['VAR']
-        # self.logger.debug(f'After change: {ret_val}')
 
+        # self.logger.debug(f'After change: {ret_val}')
         return ret_val
 
     def match(self, content: str, full_search_strategy="never"):
