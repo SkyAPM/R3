@@ -1,85 +1,62 @@
-# R3
+# R3 
 
-RESTful Pattern Recognition(R3) for Apache SkyWalking AI pipeline.
+<img src="r3.png" alt="r3 logo" height="150px" align="right" />
 
-**IMPORTANT** A baseline dataset for verifying the changes of the algorithm is needed. The algorithm
-development process doesn't ensure the correctness of the algorithm until the dataset is ready.
+**R3**: <ins>R</ins>ESTful Patte<ins>r</ins>n <ins>R</ins>ecognition (R3) for the Apache SkyWalking AI pipeline.
 
 
-### Demo
 
-To run a demo of the algorithm (integration is pending to SkyWalking):
+### What is R3?
+Modern APIs are often written in a RESTful convention. For example, the below endpoint contains four parameters, meaning each instance of this endpoint will be different although they share the same pattern.
 
-1. Install the dependencies with `make env`
-2. CD into this folder and run `python demo/demo_gradio.py`
-3. Open `http://localhost:8080` in your browser or access through remote gradio url from the web by setting `launch(share=True)`
-4. Enjoy!
+`/api/v{apiVersion}/artists/{artistid}/moments/{postid}/comments/{commentid}`
+
+While the DevOps team could setup rules for grouping such URI patterns, it quickly gets overwhelming when there are numerous endpoints across services. 
+
+R3 is a project that entirely eliminates the need for writing complex expressions to group RESTful endpoints for runtime performance analysis tasks.
+
+**IMPORTANT** The R3 algorithm is based on machine learning and, as with any algorithm, it doesn't guarantee 100% accuracy (still, it's highly accurate). 
+However, it offers a powerful and convenient solution for grouping RESTful endpoints in any scenario.
+
+### Getting Started
+Currently, R3 offers a simple gRPC service that could be deployed easily at local or containerized environments.
+
+#### Simple Server (Multiprocessing Producer Consumer)
+
+The simple server is the best way to get started, which could steadily serve 500+ SkyWalking services * 3000 uris per minute). 
+
+TODO: Fault tolerence and persistence is not implemented yet.
+
+To run the R3 service on localhost:
+
+```bash
+python -m servers.simple.run
+```
+
+To deploy as a container:
+
+```
+docker run -d --name r3 -p 17128:17128 r3:latest 
+```
+
 
 ### Algorithm: URIDrain
+If you are curious how the algorithm actually works or decided to improve upon it, please first read the [URIDrain Overview](models/README.md) and checkout the algorithm live demo by running below commands:
 
-URIDrain is a robust online URI sequence clustering algorithm based on the [Drain3](https://github.com/logpai/Drain3)
-algorithm.
+To run a demo of the algorithm (implemented with [Gradio](https://gradio.app/)):
 
-The original paper of Drain can be found [here](https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf)
-and [here](https://arxiv.org/pdf/1806.04356.pdf).
+1. Install the dependencies with `make install` (or `make env` if you plan to contribute code)
+2. Run `python demo.demo_gradio`
+3. Open `http://localhost:8080` in your browser or access through remote gradio service from the web by setting `launch(share=True)`
+4. Enjoy!
 
-#### Upstream Drain3 version
 
-- Currently
-  at [e0e942886845315ec4eac8b8de68859d9e106908](https://github.com/logpai/Drain3/commit/e0e942886845315ec4eac8b8de68859d9e106908)
+### Licenses
+This project is dual-licensed under MIT and Apache 2.0.
 
-#### How URIDrain works?
+The URIDrain algorithm implemented in this project is a modified version of the upstream [Drain3](https://github.com/logpai/Drain3) log clustering algorithm. 
 
-URIDrain operates by maintaining a fixed-depth tree on the URI sequences. Each node in the tree represents a unique
-characteristic token. The tree is traversed to find the best matching cluster for a new URI sequence, it's an
-incremental algorithm. If no matching cluster is found, a new cluster is created, otherwise, the matching cluster will
-be updated if needed to reflect the new URI sequence.
+Therefore, the modified algorithm is also licensed under MIT as the upstream. The remaining utilities and services are licensed under Apache 2.0, which also allows commercial usage as long as users adhere to the license terms.
 
-In addition to the Drain3 algorithm, the URIDrain adds several key improvements to adapt the log clustering problem to
-the URI domain. Which includes:
-
-1. The URIDrain algorithm is designed to work with diverse URI sequences of different lengths and formats.
-2. The matching threshold is **dynamically** calculated given the characteristics of the URI sequences.
-3. The URIDrain algorithm doesn't involve pre-masking of the URI sequences to prevent false assumptions.
-4. The URIDrain algorithm takes preceding and subsequent URI tokens into account when deciding if a matched cluster
-   should be updated.
-5. **TODO**: The URIDrain algorithm optionally use English Corpus to help identify likely non-parameter tokens.
-
-**Known Caveats**:
-The algorithm may provide false clustering in some edge cases (although it doesn't hurt at all in APM scenarios). 
-The caveat is led by the fact that some different endpoints may contain common params accidentally
-in extremely rare cases (When the incoming sequence order is in bad luck). Example:
-```text
-cur_sim = 0.25 for cluster 1, cluster.log_template_tokens = ('api', 'v2', 'customers', 'xyz789') with param count = 0
-cur_sim = 0.5 for cluster 3, cluster.log_template_tokens = ('api', 'v1', 'projects', '<:VAR:>') with param count = 1
-cur_sim = 0.75 for cluster 7, cluster.log_template_tokens = ('api', 'v1', 'wallets', 'abcdef') with param count = 0
-cur_sim = 0.5 for cluster 8, cluster.log_template_tokens = ('api', 'v1', 'bills', 'abcxyz') with param count = 0
-cur_sim = 0.5 for cluster 9, cluster.log_template_tokens = ('api', 'v1', 'services', 'abc456') with param count = 0
-cur_sim = 0.75 for cluster 12, cluster.log_template_tokens = ('api', 'v1', 'companies', 'xyz123') with param count = 0
-seq1 (incoming uri) = api/v1/companies/abcdef
-seq2 (matched template) = api/v1/wallets/abcdef
-```
-another example
-```text
-seq1 (matched 1) = api/v1/haha/456/anotherpath2
-
-seq1 (incoming uri) = api/v1/haha/456/actualpath1
-
-seq2 (matched 2) = api/v1/haha/123/actualpath1
-```
-This can be mitigated with NLTK to detect which tokens are likely to be parameters. This is not implemented yet.
-
-General rule is: do not trust a template that only have size 1 and has no params identified: it's likely to be a false classification.
-
-TODO: Add postprocessing for such single templates (it's single because algorithm has preference for correct template with param count. 
-(IFF template is size 1 and has no params and is almost identical to another template, merge them)
-
-### Integration
-This project rely on gRPC to communicate with the Apache SkyWalking AI pipeline. The gRPC service definition can be found
-in the `server/proto/' folder. 
-
-Compile the proto by running `make gen` or simply `make env` if you are get started from a bare environment.
-
-### TODO
-Try catch statements to handle uncovered algorithm errors
-
+### Contributing
+We welcome contributions from the community to make R3 more robust. Whether it's bug fixes, feature enhancements, or new ideas, your input is valuable.
