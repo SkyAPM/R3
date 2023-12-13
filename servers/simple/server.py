@@ -14,6 +14,7 @@
 
 import asyncio
 import sys
+from collections import defaultdict
 from concurrent import futures
 
 import grpc
@@ -35,6 +36,7 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
         super().__init__()
         self.shared_results_object = shared_results_object
         self.uri_main_queue = uri_main_queue
+        self.known_services = defaultdict(int)  # service_name: received_count
 
     async def fetchAllPatterns(self, request, context):
         # TODO OAP SIDE OR THIS SIDE must save the version, e.g. oap should check if version is > got version,  since
@@ -79,8 +81,15 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
         if request.service == 'User':
             # It should not be called
             return Empty()
+
         uris = [str(uri.name) for uri in request.unrecognizedUris]
         service = str(request.service)
+
+        # This is an experimental mechanism to avoid identifying non-restful uris unnecessarily.
+        self.known_services[service] += len(set(uris))
+        if self.known_services[service] < 20:  # This hard-coded as 20 in SkyWalking UI as a heuristic
+            print(f'Unique Uri count too low for service {service}, skipping')
+            return Empty()
         self.uri_main_queue.put((uris, service))
         return Empty()
 

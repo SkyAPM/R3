@@ -115,7 +115,8 @@ with gr.Blocks(theme=gr.themes.Default()) as demo:
                                                   ["Endpoint200_hard"],
                                                   ["Endpoint100_trivial_3k_repeat"],
                                                   ["Endpoint200_hard_3k_repeat"],
-                                                  ['Endpoint100_trivial_500k_perf_bench']
+                                                  ['Endpoint100_trivial_500k_perf_bench'],
+                                                  ['Endpoint100_counterexamples'],
                                               ],
                                               )
             # Shuffling dataset
