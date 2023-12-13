@@ -21,16 +21,22 @@ However, it offers a powerful and convenient solution for grouping RESTful endpo
 ### Getting Started
 Currently, R3 offers a simple gRPC service that could be deployed easily at local or containerized environments.
 
-To run the R3 service at localhost:
-
 #### Simple Server (Multiprocessing Producer Consumer)
 
 The simple server is the best way to get started, which could steadily serve 500+ SkyWalking services * 3000 uris per minute). 
 
 TODO: Fault tolerence and persistence is not implemented yet.
 
+To run the R3 service on localhost:
+
 ```bash
 python -m servers.simple.run
+```
+
+To deploy as a container:
+
+```
+docker run -d --name r3 -p 17128:17128 r3:latest 
 ```
 
 
