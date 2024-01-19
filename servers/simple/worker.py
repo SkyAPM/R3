@@ -39,7 +39,7 @@ def run_worker(uri_main_queue, shared_results_object):
             print('-================-')
             uris, service = uri_package[0], uri_package[1]
             # print(uri_main_queue.get(timeout=1))
-            print(f'Got uri package of length {len(uri_package[0])} for service <{uri_package[1]}>')
+            print(f'Got uri package of count {len(uri_package[0])} for service {uri_package[1]}')
             start_time = time.time()
             for uri in uris:
                 drain_instances[service].add_log_message(uri)
@@ -48,7 +48,7 @@ def run_worker(uri_main_queue, shared_results_object):
             sorted_drain_clusters = sorted(drain_clusters, key=lambda it: it.size, reverse=True)
 
             drain_clusters_templates = [cluster.get_template() for cluster in sorted_drain_clusters]
-            shared_results_object.set_dict_field(service=service, value=drain_clusters_templates)  # TODO add version
+            shared_results_object.set_dict_field(service=service, value=drain_clusters_templates)
             # increment here
             counter += 1
             print('-================-')

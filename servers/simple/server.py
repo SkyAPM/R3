@@ -24,6 +24,8 @@ from servers.protos.generated import ai_http_uri_recognition_pb2
 from servers.protos.generated import ai_http_uri_recognition_pb2_grpc
 from servers.protos.generated.ai_http_uri_recognition_pb2 import Pattern
 
+# put into config file
+GRPC_R3_PORT = 17128
 
 class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecognitionServiceServicer):
     """
@@ -42,21 +44,22 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
         # TODO OAP SIDE OR THIS SIDE must save the version, e.g. oap should check if version is > got version,  since
         #  this is a stateful service and it may crash and restart
         print('-================-')
-        print(
-            f'> Received fetchAllPatterns request for service <{request.service}>, '
-            f'oap side version is: {request.version}')
-
         version = str(self.shared_results_object.get_version(service=request.service))
+
+        print(
+            f'> Received fetchAllPatterns request for service {request.service}, '
+            f'oap side version is: {request.version}, r3 side version is: {version}')
+
         if version == '0':
             version = 'NULL'  # OAP side is NULL, so we must not return NULL otherwise it will always be NULL
 
         # https://github.com/apache/skywalking/blob/master/oap-server/ai-pipeline/src/main/java/org
         # /apache/skywalking/oap/server/ai/pipeline/services/HttpUriRecognitionService.java#LL39C32-L39C32
         if version == request.version:  # Initial version is NULL
-            print('Version match, returning empty response')
+            print('Versions match, returning empty response since OAP is already at latest')
             return ai_http_uri_recognition_pb2.HttpUriRecognitionResponse(patterns=[], version=version)
 
-        print(f'Version do not match, local:{version} vs oap:{request.version}')
+        print(f'Versions not match, local version:{version} vs OAP version:{request.version}, requiring sync')
 
         cluster_candidates = self.shared_results_object.get_dict_field(request.service)
         patterns = []
@@ -64,10 +67,11 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
             if '{var}' in cluster:
                 patterns.append(Pattern(pattern=cluster))
             else:  # TODO this is for post processing feature to be added
-                print("Skipping pattern without {var}, OAP won't need this")
+                print("Skipping pattern \"{cluster}\" without any \{var\}, OAP won't need this. Check this carefully and see if algorithm is working properly.")
         print(f'Returning {len(patterns)} patterns')
 
-        print('-================-')
+        print('-========Full List of Patterns========-')
+        print(p) for p in patterns
 
         return ai_http_uri_recognition_pb2.HttpUriRecognitionResponse(patterns=patterns, version=version)
 
@@ -77,7 +81,7 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
 
         There will always be a User service, its in topology, but it will not call fetchAllPatterns
         """
-        print(f'> Received feedRawData request for service {request.service}')
+        print(f'> Received feedRawData request for service {request.service}, the <User> service will be ignored')
         if request.service == 'User':
             # It should not be called
             return Empty()
@@ -88,8 +92,9 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
         # This is an experimental mechanism to avoid identifying non-restful uris unnecessarily.
         self.known_services[service] += len(set(uris))
         if self.known_services[service] < 20:  # This hard-coded as 20 in SkyWalking UI as a heuristic
-            print(f'Unique Uri count too low for service {service}, skipping')
+            print(f'Unique Uri count too low (<20 unique uris) for service {service}, skipping to prevent inaccurate results')
             return Empty()
+        print(f'Sending Uris to processing queue, uris {uris}')
         self.uri_main_queue.put((uris, service))
         return Empty()
 
@@ -100,11 +105,12 @@ async def serve(uri_main_queue, shared_results_object):
     ai_http_uri_recognition_pb2_grpc.add_HttpUriRecognitionServiceServicer_to_server(
         HttpUriRecognitionServicer(uri_main_queue=uri_main_queue, shared_results_object=shared_results_object), server)
 
-    server.add_insecure_port('[::]:17128')  # TODO: change to config injection
+
+    server.add_insecure_port(f'[::]:{GRPC_R3_PORT}')  # TODO: change to config injection
 
     await server.start()
 
-    print('Server started!')
+    print(f'R3 server started on port {GRPC_R3_PORT}!')
 
     await server.wait_for_termination()  # timeout=5
 
