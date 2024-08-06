@@ -17,6 +17,7 @@ class TemplateMinerConfig:
         self.profiling_report_sec = 60
         self.snapshot_interval_minutes = 5
         self.snapshot_compress_state = True
+        self.snapshot_file_dir = None
         self.drain_extra_delimiters = []
         self.drain_sim_th = 0.4
         self.drain_depth = 4
@@ -50,6 +51,9 @@ class TemplateMinerConfig:
                                                        fallback=self.snapshot_interval_minutes)
         self.snapshot_compress_state = parser.getboolean(section_snapshot, 'compress_state',
                                                          fallback=self.snapshot_compress_state)
+        file_path = parser.get(section_snapshot, 'file_path', fallback=None)
+        if file_path:
+            self.snapshot_file_dir = file_path
 
         drain_extra_delimiters_str = parser.get(section_drain, 'extra_delimiters',
                                                 fallback=str(self.drain_extra_delimiters))

@@ -5,23 +5,37 @@ import logging
 import re
 import time
 import zlib
+from collections import defaultdict
 from typing import Optional, List, NamedTuple
 
 import jsonpickle
 from cachetools import LRUCache, cachedmethod
 
-from models.uri_drain.uri_drain import Drain, LogCluster
 # from drain3.jaccard_drain import JaccardDrain # MODIFIED:: NOT USED AT ALL
 from models.uri_drain.masking import LogMasker
-from models.uri_drain.persistence_handler import PersistenceHandler
-from models.utils.simple_profiler import SimpleProfiler, NullProfiler, Profiler
+from models.uri_drain.persistence_handler import PersistenceHandler, ServicePersistentLoader, \
+    ServiceFilePersistenceHandler
 from models.uri_drain.template_miner_config import TemplateMinerConfig
+from models.uri_drain.uri_drain import Drain, LogCluster
+from models.utils.simple_profiler import SimpleProfiler, NullProfiler, Profiler
 
 logger = logging.getLogger(__name__)
 
 config_filename = 'drain3.ini'
 
 ExtractedParameter = NamedTuple("ExtractedParameter", [("value", str), ("mask_name", str)])
+
+
+def load_existing_miners(config: TemplateMinerConfig = None):
+    if config.snapshot_file_dir is None:
+        return
+    existing_services = ServicePersistentLoader(config.snapshot_file_dir).load_services()
+    miners = defaultdict(TemplateMiner)
+    if len(existing_services) > 0:
+        print(f'Detected {len(existing_services)} services from disk')
+        for service in existing_services:
+            miners[service] = TemplateMiner(ServiceFilePersistenceHandler(config.snapshot_file_dir, service), config)
+    return miners
 
 
 class TemplateMiner:
@@ -87,7 +101,7 @@ class TemplateMiner:
         logger.info("Checking for saved state")
 
         state = self.persistence_handler.load_state()
-        if state is None:
+        if state is None or state == b'':
             logger.info("Saved state not found")
             return
 

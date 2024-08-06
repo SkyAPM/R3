@@ -135,6 +135,11 @@ class DrainBase:
     def clusters(self):
         return self.id_to_cluster.values()
 
+    @property
+    def cluster_patterns(self):
+        sorted_drain_clusters = sorted(self.clusters, key=lambda it: it.size, reverse=True)
+        return [cluster.get_template() for cluster in sorted_drain_clusters]
+
     @staticmethod
     def has_numbers(s):
         return any(char.isdigit() for char in s)
