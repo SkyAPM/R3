@@ -82,7 +82,7 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
             # It should not be called
             return Empty()
 
-        uris = [str(uri.name) for uri in request.unrecognizedUris]
+        uris = [str(uri.name) for uri in request.unrecognizedUris if uri and uri.name]
         service = str(request.service)
 
         # This is an experimental mechanism to avoid identifying non-restful uris unnecessarily.
