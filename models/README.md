@@ -6,6 +6,8 @@ algorithm.
 The original paper of Drain can be found [here](https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf)
 and [here](https://arxiv.org/pdf/1806.04356.pdf).
 
+The configuration please refer to [Configuration Documentation](./Configuration.md).
+
 #### Upstream Drain3 version
 
 - Currently

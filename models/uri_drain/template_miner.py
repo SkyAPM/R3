@@ -27,14 +27,14 @@ ExtractedParameter = NamedTuple("ExtractedParameter", [("value", str), ("mask_na
 
 
 def load_existing_miners(config: TemplateMinerConfig = None):
-    if config.persistent_file_dir is None:
+    if config.snapshot_file_dir is None:
         return
-    existing_services = ServicePersistentLoader(config.persistent_file_dir).load_services()
+    existing_services = ServicePersistentLoader(config.snapshot_file_dir).load_services()
     miners = defaultdict(TemplateMiner)
     if len(existing_services) > 0:
         print(f'Detected {len(existing_services)} services from disk')
         for service in existing_services:
-            miners[service] = TemplateMiner(ServiceFilePersistenceHandler(config.persistent_file_dir, service))
+            miners[service] = TemplateMiner(ServiceFilePersistenceHandler(config.snapshot_file_dir, service), config)
     return miners
 
 

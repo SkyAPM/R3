@@ -31,7 +31,7 @@ def create_defaultdict_with_key(factory):
 
 def run_worker(uri_main_queue, shared_results_object, config, existing_miners):
     drain_instances = create_defaultdict_with_key(lambda key:  # URIDrain instances
-                                                  TemplateMiner(ServiceFilePersistenceHandler(config.persistent_file_dir, key) if config.persistent_file_dir else None, config))
+                                                  TemplateMiner(ServiceFilePersistenceHandler(config.snapshot_file_dir, key) if config.snapshot_file_dir else None, config))
     for service in existing_miners:
         drain_instances[service] = existing_miners[service]
 
