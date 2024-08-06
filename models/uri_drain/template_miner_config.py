@@ -27,6 +27,7 @@ class TemplateMinerConfig:
         self.mask_suffix = ">"
         self.parameter_extraction_cache_capacity = 3000
         self.parametrize_numeric_tokens = True
+        self.persistent_file_dir = None
 
     def load(self, config_filename: str):
         parser = configparser.ConfigParser()
@@ -38,6 +39,7 @@ class TemplateMinerConfig:
         section_snapshot = 'SNAPSHOT'
         section_drain = 'DRAIN'
         section_masking = 'MASKING'
+        section_persistent = 'PERSISTENT'
 
         self.engine = parser.get(section_drain, 'engine', fallback=self.engine)
 
@@ -79,3 +81,8 @@ class TemplateMinerConfig:
             instruction = MaskingInstruction(mi['regex_pattern'], mi['mask_with'])
             masking_instructions.append(instruction)
         self.masking_instructions = masking_instructions
+
+        if parser.has_section(section_persistent):
+            file_path = parser.get(section_persistent, 'file_path', fallback=None)
+            if file_path:
+                self.persistent_file_dir = file_path
