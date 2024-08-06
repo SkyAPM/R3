@@ -52,5 +52,7 @@ def run_worker(uri_main_queue, shared_results_object):
             # increment here
             counter += 1
             print('-================-')
+        except Exception as e:
+            print(f"catch an unexpected error occurred: {e}")
         except queue.Empty:  # TODO Consider queue full
             pass
