@@ -28,13 +28,14 @@ Currently, all similar content is replaced with `{var}` by default.
 
 Drain is the core algorithm of URI Drain. 
 
-| Name             | Type(Unit) | Environment Key        | Default | Description                                                                                                                                                          |
-|------------------|------------|------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| sim_th           | float      | DRAIN_SIM_TH           | 0.4     | The similarity threshold to decide if a new sequence should be merged into an existing cluster.                                                                      |
-| depth            | int        | DRAIN_DEPTH            | 4       | Max depth levels of pattern. Minimum is 2.                                                                                                                           |
-| max_children     | int        | DRAIN_MAX_CHILDREN     | 100     | Max number of children of an internal node.                                                                                                                          |
-| max_clusters     | int        | DRAIN_MAX_CLUSTERS     | 1024    | Max number of tracked clusters (unlimited by default). When this number is reached, model starts replacing old clusters with a new ones according to the LRU policy. |
-| extra_delimiters | string     | DRAIN_EXTRA_DELIMITERS | \["/"\] | The extra delimiters to split the sequence.                                                                                                                          |
+| Name                   | Type(Unit) | Environment Key              | Default | Description                                                                                                                                                          |
+|------------------------|------------|------------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| sim_th                 | float      | DRAIN_SIM_TH                 | 0.4     | The similarity threshold to decide if a new sequence should be merged into an existing cluster.                                                                      |
+| depth                  | int        | DRAIN_DEPTH                  | 4       | Max depth levels of pattern. Minimum is 2.                                                                                                                           |
+| max_children           | int        | DRAIN_MAX_CHILDREN           | 100     | Max number of children of an internal node.                                                                                                                          |
+| max_clusters           | int        | DRAIN_MAX_CLUSTERS           | 1024    | Max number of tracked clusters (unlimited by default). When this number is reached, model starts replacing old clusters with a new ones according to the LRU policy. |
+| extra_delimiters       | string     | DRAIN_EXTRA_DELIMITERS       | \["/"\] | The extra delimiters to split the sequence.                                                                                                                          |
+| analysis_min_url_count | int        | DRAIN_ANALYSIS_MIN_URL_COUNT | 20      | The minimum number of unique URLs(each service) to trigger the analysis.                                                                                             |
 
 ### Profiling
 

@@ -44,7 +44,7 @@ def run():
     for service in miners:
         shared_results_object.set_dict_field(service=service, value=miners[service].drain.cluster_patterns)
 
-    producer_process = multiprocessing.Process(target=run_server, args=(uri_main_queue, shared_results_object))
+    producer_process = multiprocessing.Process(target=run_server, args=(uri_main_queue, shared_results_object, config))
     consumer_process = multiprocessing.Process(target=run_worker, args=(uri_main_queue, shared_results_object, config, miners))
 
     producer_process.start()
