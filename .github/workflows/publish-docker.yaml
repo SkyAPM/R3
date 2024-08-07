@@ -40,27 +40,25 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Determine tags for Docker image
+        id: set-tags
+        run: |
+          echo "TAGS=${{ github.sha }}" >> $GITHUB_ENV
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "TAGS=type=ref,event=tag" >> $GITHUB_ENV
+          fi
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: |
-            ghcr.io/${{ github.repository }}
+          images: ghcr.io/${{ github.repository }}
+          tags: ${{ env.TAGS }}
 
-      - name: Build and push Docker images when push to main
+      - name: Build and push Docker images
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        if: github.ref == 'refs/heads/main'
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.images }}:${{ github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Build and push Docker images when release
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        if: startsWith(github.ref, 'refs/tags/v')
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.images }}:${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
