@@ -13,32 +13,14 @@
 # limitations under the License.
 
 patterns:
-    - /api-this-is-a-special-case/v99999999999999999/orders/delete/{var}
-    - /api-this-is-a-special-case/v99999999999999999/orders/reorder/{var}
-    - /api-this-is-a-special-case/v99999999999999999/orders/update/{var}
     - /api/v1/bills/{var}
     - /api/v1/companies/{var}
-    - /api/v1/companies/{var}/employees/{var}/reviews/{var}
-    - /api/v1/companies/{var}/tasks/{var}/assignees/{var}
     - /api/v1/projects/{var}
     - /api/v1/services/{var}
     - /api/v1/users/{var}/posts/{var}/comments
-    - /api/v1/users/{var}/posts/{var}/comments/{var}
     - /api/v1/wallets/{var}
-    - /api/v2/admin/users/{var}
     - /api/v2/courses/{var}/modules/{var}/lessons
     - /api/v2/customers/{var}
     - /api/v3/products/{var}/reviews/{var}/comments
-    - /api/v3/providers/{var}
     - /api/v4/orders/{var}/items/{var}/tracking
-    - /customer/{var}
-    - /customer/{var}/order/{var}
-    - /customer/{var}/profile/{var}/compare/{var}/profile/{var}
-    - ABC/{var}
-    - HikariCP/Connection/{var}
-    - google.com/api/v1/users/{var}
-    - http://www.google.com/api/v1/users/{var}
-    - https://www.google.com/api/v1/users/{var}
-    - top1.abc.example.com.net.cn/api/v1/users/{var}
-    - www.google.com/api/v1/users/{var}
 version: '1'

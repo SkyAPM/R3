@@ -12,7 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-patterns:
-    - "/api/v1/usernames/{var}"
-    - "/api/v1/users/{var}"
+patterns: []
 version: "1"

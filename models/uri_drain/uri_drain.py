@@ -15,12 +15,13 @@ import logger
 
 
 class LogCluster:  # TODO Modified:: Changed to URICluster
-    __slots__ = ["log_template_tokens", "cluster_id", "size"]
+    __slots__ = ["log_template_tokens", "cluster_id", "size", "latest_urls"]
 
-    def __init__(self, log_template_tokens: list, cluster_id: int):
+    def __init__(self, log_template_tokens: list, cluster_id: int, combine_min_url_count: int):
         self.log_template_tokens = tuple(log_template_tokens)
         self.cluster_id = cluster_id
         self.size = 1
+        self.latest_urls = LRUCache(combine_min_url_count+1)
 
     def get_template(self):
         # Modified:: Changed to join by slash instead of space for
@@ -46,6 +47,27 @@ class LogCluster:  # TODO Modified:: Changed to URICluster
         else:
             template = '/'.join(self.log_template_tokens)
             return f'/{template}'
+
+    def adding_url(self, url: str):
+        if self.latest_urls.__contains__(url):
+            return
+        self.latest_urls[url] = True
+
+    def __str__(self):
+        # return f"ID={str(self.cluster_id).ljust(5)} : size={str(self.size).ljust(10)}: {self.get_template()}"
+        return f"size={str(self.size).ljust(10)}: {self.get_template()}"
+
+
+class SingleURILogCluster:
+    __slots__ = ["uri", "cluster_id", "size"]
+
+    def __init__(self, uri: str):
+        self.uri = uri
+        self.cluster_id = -1
+        self.size = 1
+
+    def get_template(self):
+        return self.uri
 
     def __str__(self):
         # return f"ID={str(self.cluster_id).ljust(5)} : size={str(self.size).ljust(10)}: {self.get_template()}"
@@ -83,6 +105,7 @@ class DrainBase:
                  sim_th=0.4,
                  max_children=100,
                  max_clusters=None,
+                 combine_min_url_count=8,
                  extra_delimiters=(),
                  profiler: Profiler = NullProfiler(),
                  param_str="{var}",  # Modified:: required param_str
@@ -116,6 +139,7 @@ class DrainBase:
         self.max_node_depth = depth - 2  # max depth of a prefix tree node, starting from zero
         self.sim_th = sim_th
         self.max_children = max_children
+        self.combine_min_url_count = combine_min_url_count
         self.root_node = Node()
         self.profiler = profiler
         self.extra_delimiters = extra_delimiters
@@ -133,7 +157,14 @@ class DrainBase:
 
     @property
     def clusters(self):
-        return self.id_to_cluster.values()
+        result = []
+        for cluster in self.id_to_cluster.values():
+            if cluster.latest_urls and cluster.latest_urls.__len__() >= self.combine_min_url_count:
+                result.append(cluster)
+                continue
+            for url, _ in cluster.latest_urls.items():
+                result.append(SingleURILogCluster(url))
+        return result
 
     @property
     def cluster_patterns(self):
@@ -245,7 +276,7 @@ class DrainBase:
                 self.profiler.start_section("create_cluster")
             self.clusters_counter += 1
             cluster_id = self.clusters_counter
-            match_cluster = LogCluster(content_tokens, cluster_id)
+            match_cluster = LogCluster(content_tokens, cluster_id, self.combine_min_url_count)
             self.id_to_cluster[cluster_id] = match_cluster
             self.add_seq_to_prefix_tree(self.root_node, match_cluster)
             update_type = "cluster_created"
@@ -261,7 +292,7 @@ class DrainBase:
                 update_type = "rejected (create new)"
                 self.clusters_counter += 1
                 cluster_id = self.clusters_counter
-                match_cluster = LogCluster(content_tokens, cluster_id)
+                match_cluster = LogCluster(content_tokens, cluster_id, self.combine_min_url_count)
                 self.id_to_cluster[cluster_id] = match_cluster
                 self.add_seq_to_prefix_tree(self.root_node, match_cluster)
                 match_cluster.size -= 1
@@ -278,6 +309,7 @@ class DrainBase:
         if self.profiler:
             self.profiler.end_section()
 
+        match_cluster.adding_url(content)
         return match_cluster, update_type
 
     def get_total_cluster_size(self):
@@ -315,12 +347,13 @@ class Drain(DrainBase):
                  sim_th=0.4,
                  max_children=100,
                  max_clusters=None,
+                 combine_min_url_count=8,
                  extra_delimiters=(),
                  profiler: Profiler = NullProfiler(),
                  param_str="<*>",
                  # param_extra=None,  # Modified:: Added param_extra
                  parametrize_numeric_tokens=True):
-        super().__init__(depth, sim_th, max_children, max_clusters, extra_delimiters, profiler, param_str,
+        super().__init__(depth, sim_th, max_children, max_clusters, combine_min_url_count, extra_delimiters, profiler, param_str,
                          # param_extra,
                          parametrize_numeric_tokens)
 

@@ -84,6 +84,7 @@ class TemplateMiner:
             max_children=self.config.drain_max_children,
             max_clusters=self.config.drain_max_clusters,
             extra_delimiters=self.config.drain_extra_delimiters,
+            combine_min_url_count=self.config.drain_combine_min_url_count,
             profiler=self.profiler,
             param_str=param_str,
             # param_extra=param_extra,  # MODIFIED:: for URI Drain < It is now a dict since contains multiple types

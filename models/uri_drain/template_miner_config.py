@@ -28,6 +28,7 @@ class TemplateMinerConfig:
         self.drain_max_children = 100
         self.drain_max_clusters = None
         self.drain_analysis_min_url_count = 20
+        self.drain_combine_min_url_count = 8
         self.masking_instructions = []
         self.mask_prefix = "<"
         self.mask_suffix = ">"
@@ -82,6 +83,8 @@ class TemplateMinerConfig:
                                                                           self.parameter_extraction_cache_capacity)
         self.drain_analysis_min_url_count = self.read_config_value(parser, section_drain, 'analysis_min_url_count', int,
                                                                    self.drain_analysis_min_url_count)
+        self.drain_combine_min_url_count = self.read_config_value(parser, section_drain, 'combine_min_url_count', int,
+                                                                  self.drain_combine_min_url_count)
 
         masking_instructions = []
         masking_list = json.loads(masking_instructions_str)
