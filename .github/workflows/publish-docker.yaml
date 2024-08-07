@@ -53,7 +53,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ github.sha }}
+          tags: ${{ steps.meta.outputs.images }}:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Build and push Docker images when release
@@ -62,5 +62,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.images }}:${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
