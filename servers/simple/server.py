@@ -32,11 +32,12 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
     TODO: SOREUSEPORT for load balancing? << NOT going to work, its stateful
     """
 
-    def __init__(self, uri_main_queue, shared_results_object):
+    def __init__(self, uri_main_queue, shared_results_object, conf):
         super().__init__()
         self.shared_results_object = shared_results_object
         self.uri_main_queue = uri_main_queue
         self.known_services = defaultdict(int)  # service_name: received_count
+        self.conf = conf
 
     async def fetchAllPatterns(self, request, context):
         # TODO OAP SIDE OR THIS SIDE must save the version, e.g. oap should check if version is > got version,  since
@@ -87,18 +88,18 @@ class HttpUriRecognitionServicer(ai_http_uri_recognition_pb2_grpc.HttpUriRecogni
 
         # This is an experimental mechanism to avoid identifying non-restful uris unnecessarily.
         self.known_services[service] += len(set(uris))
-        if self.known_services[service] < 20:  # This hard-coded as 20 in SkyWalking UI as a heuristic
-            print(f'Unique Uri count too low for service {service}, skipping')
+        if self.known_services[service] < self.conf.drain_analysis_min_url_count:
+            print(f'Unique Uri count too low({self.known_services[service]} < {self.conf.drain_analysis_min_url_count}) for service {service}, skipping')
             return Empty()
         self.uri_main_queue.put((uris, service))
         return Empty()
 
 
-async def serve(uri_main_queue, shared_results_object):
+async def serve(uri_main_queue, shared_results_object, conf):
     server = grpc.aio.server(futures.ThreadPoolExecutor(max_workers=10))
 
     ai_http_uri_recognition_pb2_grpc.add_HttpUriRecognitionServiceServicer_to_server(
-        HttpUriRecognitionServicer(uri_main_queue=uri_main_queue, shared_results_object=shared_results_object), server)
+        HttpUriRecognitionServicer(uri_main_queue=uri_main_queue, shared_results_object=shared_results_object, conf=conf), server)
 
     server.add_insecure_port('[::]:17128')  # TODO: change to config injection
 
@@ -109,12 +110,12 @@ async def serve(uri_main_queue, shared_results_object):
     await server.wait_for_termination()  # timeout=5
 
 
-def run_server(uri_main_queue, shared_results_object):
+def run_server(uri_main_queue, shared_results_object, conf):
     loop = asyncio.get_event_loop()
     try:
         # Here `amain(loop)` is the core coroutine that may spawn any
         # number of tasks
-        sys.exit(loop.run_until_complete(serve(uri_main_queue, shared_results_object)))
+        sys.exit(loop.run_until_complete(serve(uri_main_queue, shared_results_object, conf)))
     except KeyboardInterrupt:
         # Optionally show a message if the shutdown may take a while
         print("Attempting graceful shutdown, press Ctrl+C again to exit…", flush=True)

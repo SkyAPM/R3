@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 env_regular_regex = re.compile(r'\${(?P<ENV>[_A-Z0-9]+):(?P<DEF>.*)}')
 
+
 class TemplateMinerConfig:
     def __init__(self):
         self.engine = "Drain"
@@ -26,6 +27,7 @@ class TemplateMinerConfig:
         self.drain_depth = 4
         self.drain_max_children = 100
         self.drain_max_clusters = None
+        self.drain_analysis_min_url_count = 20
         self.masking_instructions = []
         self.mask_prefix = "<"
         self.mask_suffix = ">"
@@ -45,8 +47,10 @@ class TemplateMinerConfig:
 
         self.engine = self.read_config_value(parser, section_drain, 'engine', str, self.engine)
 
-        self.profiling_enabled = self.read_config_value(parser, section_profiling, 'enabled', bool, self.profiling_enabled)
-        self.profiling_report_sec = self.read_config_value(parser, section_profiling, 'report_sec', int, self.profiling_report_sec)
+        self.profiling_enabled = self.read_config_value(parser, section_profiling, 'enabled', bool,
+                                                        self.profiling_enabled)
+        self.profiling_report_sec = self.read_config_value(parser, section_profiling, 'report_sec', int,
+                                                           self.profiling_report_sec)
 
         self.snapshot_interval_minutes = self.read_config_value(parser, section_snapshot, 'snapshot_interval_minutes',
                                                                 int, self.snapshot_interval_minutes)
@@ -76,6 +80,8 @@ class TemplateMinerConfig:
         self.parameter_extraction_cache_capacity = self.read_config_value(parser, section_masking,
                                                                           'parameter_extraction_cache_capacity', int,
                                                                           self.parameter_extraction_cache_capacity)
+        self.drain_analysis_min_url_count = self.read_config_value(parser, section_drain, 'analysis_min_url_count', int,
+                                                                   self.drain_analysis_min_url_count)
 
         masking_instructions = []
         masking_list = json.loads(masking_instructions_str)
@@ -100,6 +106,6 @@ class TemplateMinerConfig:
         val = self.read_value_with_env(conf_value)
         if tp == bool:
             if val.lower() not in parser.BOOLEAN_STATES:
-                raise ValueError('Not a boolean: %s' % val)
+                raise ValueError(f'Not a boolean: {val}')
             return parser.BOOLEAN_STATES[val.lower()]
         return tp(val)
