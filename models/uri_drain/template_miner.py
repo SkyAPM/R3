@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 
 import base64
-import logging
+import logger
 import re
 import time
 import zlib
@@ -19,7 +19,7 @@ from models.uri_drain.template_miner_config import TemplateMinerConfig
 from models.uri_drain.uri_drain import Drain, LogCluster
 from models.utils.simple_profiler import SimpleProfiler, NullProfiler, Profiler
 
-logger = logging.getLogger(__name__)
+logger = logger.init_logger(name=__name__)
 
 config_filename = 'drain3.ini'
 
@@ -32,7 +32,7 @@ def load_existing_miners(config: TemplateMinerConfig = None):
     existing_services = ServicePersistentLoader(config.snapshot_file_dir).load_services()
     miners = defaultdict(TemplateMiner)
     if len(existing_services) > 0:
-        print(f'Detected {len(existing_services)} services from disk')
+        logger.info(f'Detected {len(existing_services)} services from disk')
         for service in existing_services:
             miners[service] = TemplateMiner(ServiceFilePersistenceHandler(config.snapshot_file_dir, service), config)
     return miners
@@ -48,7 +48,10 @@ class TemplateMiner:
         :param persistence_handler: The type of persistence to use. When None, no persistence is applied.
         :param config: Configuration object. When none, configuration is loaded from default .ini file (if exist)
         """
-        logger.info("Starting Drain3 template miner")
+        service = ""
+        if persistence_handler is not None:
+            service = persistence_handler.get_service()
+        logger.info(f"Starting Drain3 template miner of service {service}")
 
         if config is None:
             logger.info(f"Loading configuration from {config_filename}")
@@ -99,11 +102,11 @@ class TemplateMiner:
             self.load_state()
 
     def load_state(self):
-        logger.info("Checking for saved state")
+        logger.info(f"Checking for saved state of service {self.persistence_handler.get_service()}")
 
         state = self.persistence_handler.load_state()
         if state is None or state == b'':
-            logger.info("Saved state not found")
+            logger.info(f"Saved state not found of service {self.persistence_handler.get_service()}")
             return
 
         if self.config.snapshot_compress_state:

@@ -14,6 +14,7 @@
 import multiprocessing
 import os
 from os.path import dirname
+import logger
 
 from models.uri_drain.template_miner import load_existing_miners
 from models.uri_drain.template_miner_config import TemplateMinerConfig
@@ -21,9 +22,11 @@ from servers.simple.results_manager import ProxyURIDrainResultsManager, URIDrain
 from servers.simple.server import run_server
 from servers.simple.worker import run_worker
 
+logger = logger.init_logger(logging_level='INFO', name=__name__)
+
 
 def run():
-    print('Starting server from entrypoint...')
+    logger.info('Starting server from entrypoint...')
     ProxyURIDrainResultsManager.register("URIDrainResults", URIDrainResults)
 
     manager = ProxyURIDrainResultsManager()
@@ -32,7 +35,7 @@ def run():
     # Load config
     config = TemplateMinerConfig()
     config_file = os.path.join(dirname(__file__), "uri_drain.ini")
-    print(f'Searching for config file at {config_file}')
+    logger.info(f'Searching for config file at {config_file}')
     config.load(config_filename=config_file)  # change to config injection from env or other
 
     # SET DEBUG HERE! < TODO CONFIG FILE
@@ -45,7 +48,8 @@ def run():
         shared_results_object.set_dict_field(service=service, value=miners[service].drain.cluster_patterns)
 
     producer_process = multiprocessing.Process(target=run_server, args=(uri_main_queue, shared_results_object, config))
-    consumer_process = multiprocessing.Process(target=run_worker, args=(uri_main_queue, shared_results_object, config, miners))
+    consumer_process = multiprocessing.Process(target=run_worker,
+                                               args=(uri_main_queue, shared_results_object, config, miners))
 
     producer_process.start()
     consumer_process.start()

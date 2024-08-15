@@ -22,7 +22,7 @@ logger_debug_enabled = False
 def get_logger(name=None):  # noqa
     _logger = logging.getLogger(name)
     ch = logging.StreamHandler()
-    formatter = logging.Formatter('%(name)s [%(levelname)s] %(message)s')
+    formatter = logging.Formatter('%(asctime)s - %(name)s - Thread-%(process)d - [%(levelname)s] %(message)s')
     ch.setFormatter(formatter)
     _logger.addHandler(ch)
     _logger.propagate = False
