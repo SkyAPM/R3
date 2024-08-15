@@ -15,10 +15,15 @@ class PersistenceHandler(ABC):
     def load_state(self):
         pass
 
+    @abstractmethod
+    def get_service(self):
+        pass
+
 
 class ServiceFilePersistenceHandler(PersistenceHandler):
 
     def __init__(self, base_dir, service):
+        self.service_name = service
         self.file_path = os.path.join(base_dir, 'services', base64.b64encode(service.encode('utf-8')).decode('utf-8'))
         path = Path(self.file_path)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -31,6 +36,9 @@ class ServiceFilePersistenceHandler(PersistenceHandler):
     def load_state(self):
         with open(self.file_path, 'rb') as file:
             return file.read()
+
+    def get_service(self):
+        return self.service_name
 
 
 class ServicePersistentLoader:
