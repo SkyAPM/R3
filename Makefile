@@ -53,7 +53,7 @@ endif
 
 .PHONY: gen-basic
 gen-basic:
-	python3 -m pip install grpcio-tools packaging
+	python3 -m pip install grpcio-tools==1.66.0 packaging
 	python3 -m tools.grpc_gen
 
 .PHONY: install
