@@ -54,8 +54,8 @@ generate-setup-file = true
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"  # Gradio needs 3.8+
-grpcio = "*"
-grpcio-tools = "*"
+grpcio = "<=1.66.0"
+grpcio-tools = "<=1.66.0"
 jsonpickle = "^3.0.1"
 cachetools = "^5.3.1"
 nltk = "^3.8.1"
