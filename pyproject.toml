@@ -63,6 +63,7 @@ inflect = "^6.0.4"
 pytest = "^7.3.2"
 apache-skywalking = "^1.0.1"
 flask = "^2.3.2"
+textblob = "0.18.0"
 
 
 

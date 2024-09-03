@@ -4,12 +4,14 @@
 # Again, it's further modified to suit URI clustering needs,
 # changes are kept minimal to avoid divergence from Drain3 upstream.
 # TODO Note:: Every change to upstream Drain3 algorithm MUST be commented starting with "Modified::"
-
+import re
 from typing import List, Dict, Sequence
 
 from cachetools import LRUCache, Cache
 
 from models.utils.simple_profiler import Profiler, NullProfiler
+
+from textblob import TextBlob
 
 import logger
 
@@ -495,6 +497,9 @@ class Drain(DrainBase):
             if (index == 0 or index == 1) and '.' in token1 and token1 != token2:
                 # self.logger.debug('this is domain mismatch!')
                 return 0.0, 0
+            # if all new tokens are words, then we can consider it cannot be combined
+            if token1 != token2 and (self.check_all_url_deep_correct(token2) or self.check_all_url_deep_correct(token1)):
+                return -1, -1
             # if token1 in self.possible_params or token1 == self.param_str:
             if token1 == self.param_str:
                 param_count += 1
@@ -511,6 +516,25 @@ class Drain(DrainBase):
 
         ret_val = float(sim_tokens) / len(seq1)
         return ret_val, param_count
+
+    def split_for_url(self, text):
+        # split text by camel case and digits
+        pattern = r"(?<=[a-z])(?=[A-Z])|(?<=\d)(?=\D)|(?<=\D)(?=\d)"
+        return re.split(pattern, text)
+
+    def check_all_url_deep_correct(self, text):
+        words = self.split_for_url(text)
+        # if the word is a number, then it's not a param
+        if len(words) == 1 and words[0].isdigit():
+            return False
+        for word in self.split_for_url(text):
+            # When a word is not corrected, then it's not a param
+            # text blob would also split the world by regex `\w+`, so no worry about special characters(such as "_", ".")
+            corrected_word = TextBlob(word).correct()
+            if word != corrected_word:
+                return False
+
+        return True
 
     def create_template(self, seq1, seq2):
         # MODIFIED::
