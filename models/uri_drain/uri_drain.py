@@ -524,7 +524,7 @@ class Drain(DrainBase):
 
     def check_all_url_deep_correct(self, text):
         words = self.split_for_url(text)
-        # if the word is a number, then it's not a param
+        # if the word is a number, then it's maybe a param
         if len(words) == 1 and words[0].isdigit():
             return False
         for word in self.split_for_url(text):
