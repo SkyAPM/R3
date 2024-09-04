@@ -524,10 +524,10 @@ class Drain(DrainBase):
 
     def check_all_url_deep_correct(self, text):
         words = self.split_for_url(text)
-        # if the word is a number, then it's maybe a param
-        if len(words) == 1 and words[0].isdigit():
-            return False
         for word in self.split_for_url(text):
+            # if contains digits, then it's not a word, ignore the word check
+            if word.isdigit():
+                return False
             # When a word is not corrected, then it's not a param
             # text blob would also split the world by regex `\w+`, so no worry about special characters(such as "_", ".")
             corrected_word = TextBlob(word).correct()
@@ -542,14 +542,6 @@ class Drain(DrainBase):
         ret_val = list(seq2)
         seq_length = len(seq1)
 
-        # SPECIAL ASSUMPTION THAT MIGHT BE FALSE::
-        # /api/getconnection
-        # /api/dropconnection
-        if seq_length == 2:
-            if (seq1[0] == seq2[0] and seq1[1] != seq2[1]  # can be simplified
-                    and not self.has_numbers(seq1[1]) and not self.has_numbers(seq2[1])):
-                print(f'first token match but second token mismatch, seq1 = {seq1}, seq2 = {seq2}')
-                return 'rejected'
         # TODO, radical assumption if there's absolutely 0 digit in seq1 and seq2, then don't consider them similar?
         # To implement this, we increase the false negative rate, but decrease false positive rate
 
