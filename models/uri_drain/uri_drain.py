@@ -620,17 +620,19 @@ class Drain(DrainBase):
                     # self.logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
                 # ASSUMPTION: A subsequent token to version number cannot be a param
-                if pre_token is not None and pre_token.startswith(
-                        'v') and pre_token[1:].isdigit():
-                    # self.logger.debug('pre_token is a version number, so current token cannot be a param (assumption)')
-                    # self.logger.debug(f'tokens of sequence2 = {seq2}')
-                    return "rejected"
+                # This one should be deleted because we should permit the an param path is after version number path
+                # such as /test/v1/abcdef, /test/v1/bcdefg, should be merged into /test/v1/{var}
+                # if pre_token is not None and pre_token.startswith(
+                #         'v') and pre_token[1:].isdigit():
+                #     # self.logger.debug('pre_token is a version number, so current token cannot be a param (assumption)')
+                #     # self.logger.debug(f'tokens of sequence2 = {seq2}')
+                #     return "rejected"
                 if token1.startswith('v') and token1[1:].isdigit():
                     # self.logger.debug('token1 is a version number, so current token cannot be a param (assumption)')
                     # self.logger.debug(f'tokens of sequence2 = {seq2}')
                     return "rejected"
-                if pre_token and self.has_numbers(pre_token):
-                    # Based on assumption that no two consecutive tokens can be params
+                if pre_token and (not pre_token.startswith('v')) and self.has_numbers(pre_token):
+                    # Based on assumption that no two consecutive tokens can be params(unless the pre token is versioned)
                     # So attempt to change this position must ensure that the previous token is not a param
                     # self.logger.debug('pre_token has numbers, so current token cannot be a param (assumption)')
                     # self.logger.debug(f'tokens of sequence2 = {seq2}')
