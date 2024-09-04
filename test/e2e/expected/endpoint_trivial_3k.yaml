@@ -19,4 +19,9 @@ patterns:
     - /api/v1/posts/{var}
     - /api/v1/products/{var}
     - /api/v1/users/{var}
+    - /api/v2/data/users/{var}
+    - /api/v999/orders/{var}
+    - /user/{var}
+    - /user/{var}/post/{var}
+    - /user/{var}/profile/{var}/compare/{var}/profile/{var}
 version: '1'
