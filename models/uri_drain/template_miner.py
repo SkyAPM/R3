@@ -114,6 +114,12 @@ class TemplateMiner:
 
         loaded_drain: Drain = jsonpickle.loads(state, keys=True)
 
+        # load all words into clusters
+        if len(loaded_drain.id_to_cluster) > 0:
+            for _, cluster in loaded_drain.id_to_cluster.items():
+                if isinstance(cluster, LogCluster):
+                    cluster.token_words_check()
+
         # json-pickle encoded keys as string by default, so we have to convert those back to int
         # this is only relevant for backwards compatibility when loading a snapshot of drain <= v0.9.1
         # which did not use json-pickle's keys=true
@@ -137,8 +143,8 @@ class TemplateMiner:
             state = base64.b64encode(zlib.compress(state))
 
         logger.info(f"Saving state of {len(self.drain.clusters)} clusters "
-                    f"with {self.drain.get_total_cluster_size()} messages, {len(state)} bytes, "
-                    f"reason: {snapshot_reason}")
+                    f"with {self.drain.get_total_cluster_size()} messages to service <{self.persistence_handler.get_service()}>, "
+                    f"{len(state)} bytes, reason: {snapshot_reason}")
         self.persistence_handler.save_state(state)
 
     def get_snapshot_reason(self, change_type, cluster_id):

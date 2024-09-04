@@ -19,8 +19,12 @@ patterns:
     - /api/v1/services/{var}
     - /api/v1/users/{var}/posts/{var}/comments
     - /api/v1/wallets/{var}
+    - /api/v2/admin/users/{var}
     - /api/v2/courses/{var}/modules/{var}/lessons
     - /api/v2/customers/{var}
     - /api/v3/products/{var}/reviews/{var}/comments
     - /api/v4/orders/{var}/items/{var}/tracking
+    - /customer/{var}
+    - /customer/{var}/order/{var}
+    - www.google.com/api/v1/users/{var}
 version: '1'

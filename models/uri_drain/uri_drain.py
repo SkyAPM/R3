@@ -4,11 +4,11 @@
 # Again, it's further modified to suit URI clustering needs,
 # changes are kept minimal to avoid divergence from Drain3 upstream.
 # TODO Note:: Every change to upstream Drain3 algorithm MUST be commented starting with "Modified::"
-import re
 from typing import List, Dict, Sequence
 
 from cachetools import LRUCache, Cache
 
+from models.uri_drain.word_splitter import check_all_word_correct
 from models.utils.simple_profiler import Profiler, NullProfiler
 
 from textblob import TextBlob
@@ -20,7 +20,7 @@ class LogCluster:  # TODO Modified:: Changed to URICluster
     __slots__ = ["log_template_tokens", "cluster_id", "size", "latest_urls"]
 
     def __init__(self, log_template_tokens: list, cluster_id: int, combine_min_url_count: int):
-        self.log_template_tokens = tuple(log_template_tokens)
+        self.log_template_tokens = tuple(parse_token_list(log_template_tokens))
         self.cluster_id = cluster_id
         self.size = 1
         self.latest_urls = LRUCache(combine_min_url_count+1)
@@ -58,6 +58,27 @@ class LogCluster:  # TODO Modified:: Changed to URICluster
     def __str__(self):
         # return f"ID={str(self.cluster_id).ljust(5)} : size={str(self.size).ljust(10)}: {self.get_template()}"
         return f"size={str(self.size).ljust(10)}: {self.get_template()}"
+
+    def token_words_check(self):
+        self.log_template_tokens = parse_token_list(self.log_template_tokens)
+
+
+class Token(str):
+    __slots__ = ["token", "word_correct"]
+
+    def __new__(cls, token: str, word_correct: bool = False):
+        return super().__new__(cls, token)
+
+    def __init__(self, token: str, word_correct: bool):
+        self.token = token
+        self.word_correct = word_correct
+
+
+def parse_token_list(tokens: List[str]) -> List[Token]:
+    result = []
+    for token in tokens:
+        result.append(Token(token, check_all_word_correct(token)))
+    return result
 
 
 class SingleURILogCluster:
@@ -200,13 +221,16 @@ class DrainBase:
         max_param_count = -1
         max_cluster = None
 
+        # pre-parse tokens to avoid repeated parsing
+        parsed_token = parse_token_list(tokens)
+
         for cluster_id in cluster_ids:
             # Try to retrieve cluster from cache with bypassing eviction
             # algorithm as we are only testing candidates for a match.
             cluster = self.id_to_cluster.get(cluster_id)
             if cluster is None:
                 continue
-            cur_sim, param_count = self.get_seq_distance(cluster.log_template_tokens, tokens, include_params)
+            cur_sim, param_count = self.get_seq_distance(cluster.log_template_tokens, parsed_token, include_params)
             # self.logger.debug(f'SIMILARITY = {cur_sim} for c{cluster_id}, {cluster.log_template_tokens} param={param_count}')
             if cur_sim > max_sim or (cur_sim == max_sim and param_count > max_param_count):
                 # todo: this is known caveat
@@ -498,7 +522,7 @@ class Drain(DrainBase):
                 # self.logger.debug('this is domain mismatch!')
                 return 0.0, 0
             # if all new tokens are words, then we can consider it cannot be combined
-            if token1 != token2 and (self.check_all_url_deep_correct(token2) or self.check_all_url_deep_correct(token1)):
+            if token1 != token2 and (token1.word_correct or token2.word_correct):
                 return -1, -1
             # if token1 in self.possible_params or token1 == self.param_str:
             if token1 == self.param_str:
@@ -516,25 +540,6 @@ class Drain(DrainBase):
 
         ret_val = float(sim_tokens) / len(seq1)
         return ret_val, param_count
-
-    def split_for_url(self, text):
-        # split text by camel case and digits
-        pattern = r"(?<=[a-z])(?=[A-Z])|(?<=\d)(?=\D)|(?<=\D)(?=\d)"
-        return re.split(pattern, text)
-
-    def check_all_url_deep_correct(self, text):
-        words = self.split_for_url(text)
-        for word in self.split_for_url(text):
-            # if contains digits, then it's not a word, ignore the word check
-            if word.isdigit():
-                return False
-            # When a word is not corrected, then it's not a param
-            # text blob would also split the world by regex `\w+`, so no worry about special characters(such as "_", ".")
-            corrected_word = TextBlob(word).correct()
-            if word != corrected_word:
-                return False
-
-        return True
 
     def create_template(self, seq1, seq2):
         # MODIFIED::
@@ -642,7 +647,7 @@ class Drain(DrainBase):
                 ret_val[i] = self.param_str
 
         # self.logger.debug(f'After change: {ret_val}')
-        return ret_val
+        return parse_token_list(ret_val)
 
     def match(self, content: str, full_search_strategy="never"):
         """

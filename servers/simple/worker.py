@@ -50,7 +50,8 @@ def run_worker(uri_main_queue, shared_results_object, config, existing_miners):
             uris, service = uri_package[0], uri_package[1]
             # print(uri_main_queue.get(timeout=1))
             start_time = time.time()
-            for uri in uris:
+            sorted_uris = sorted(uris)
+            for uri in sorted_uris:
                 drain_instances[service].add_log_message(uri)
             logger.info(f'Processed {len(uris)} uris of service {service} in {time.time() - start_time} seconds')
             patterns = drain_instances[service].drain.cluster_patterns
