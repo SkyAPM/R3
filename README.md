@@ -25,8 +25,6 @@ Currently, R3 offers a simple gRPC service that could be deployed easily at loca
 
 The simple server is the best way to get started, which could steadily serve 500+ SkyWalking services * 3000 uris per minute). 
 
-TODO: Fault tolerence and persistence is not implemented yet.
-
 To run the R3 service on localhost:
 
 ```bash
@@ -39,6 +37,60 @@ To deploy as a container:
 docker run -d --name r3 -p 17128:17128 r3:latest 
 ```
 
+### Demo
+
+#### Restful Pattern Recognition
+
+The following URL would recognize the pattern as `/api/users/{var}`, since the last part of URL are different for each instance.
+
+* /api/users/cbf11b02ea464447b507e8852c32190a
+* /api/users/5e363a4a18b7464b8cbff1a7ee4c91ca
+* /api/users/44cf77fc351f4c6c9c4f1448f2f12800
+* /api/users/38d3be5f9bd44f7f98906ea049694511
+* /api/users/5ad14302e7924f4aa1d60e58d65b3dd2
+
+#### Word Detection
+
+The following URL would keep the original URL, not parametrized, since the all part of URL are word.
+
+* /api/sale
+* /api/product_sale
+* /api/ProductSale
+
+#### Lower Sample Count
+
+The following URL would keep the original URL, not parametrized, since the sample count is lower than the threshold(`combine_min_url_count`).
+If the sample count equals or bigger than the threshold, the URL would be parametrized.
+
+Such as the threshold is `3`, the following URL would keep the original URL, not parametrized.
+
+* /api/fetch1
+* /api/fetch2
+
+But the following URL would be parametrized to `/api/{var}`, since the sample count is bigger than the threshold.
+
+* /api/fetch1
+* /api/fetch2
+* /api/fetch3
+
+#### Versioned API
+
+If the part of URI contains version number, such as `v1`, `v2`, `v3`, the version number part would not be parametrized.
+
+Such as the following URL would not be parametrized:
+
+* /test/v1
+* /test/v2
+* /test/v3
+
+If still not matter the other part of URI to be parametrized, such as the following URI would be parametrized to `/test/v1/{var}` and `/test/v999/{var}`.
+
+* /test/v1/cbf11b02ea464447b507e8852c32190a
+* /test/v1/5e363a4a18b7464b8cbff1a7ee4c91ca
+* /test/v1/38d3be5f9bd44f7f98906ea049694511
+* /test/v999/1
+* /test/v999/2
+* /test/v999/3
 
 ### Algorithm: URIDrain
 If you are curious how the algorithm actually works or decided to improve upon it, please first read the [URIDrain Overview](models/README.md) and checkout the algorithm live demo by running below commands:

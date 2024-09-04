@@ -28,7 +28,8 @@ the URI domain. Which includes:
 3. The URIDrain algorithm doesn't involve pre-masking of the URI sequences to prevent false assumptions.
 4. The URIDrain algorithm takes preceding and subsequent URI tokens into account when deciding if a matched cluster
    should be updated.
-5. **TODO**: The URIDrain algorithm optionally use English Corpus to help identify likely non-parameter tokens.
+5. The URIDrain algorithm use [English Corpus](https://github.com/sloria/TextBlob) to help identify likely non-parameter tokens.
+6. The URIDrain algorithm support recognized versioned API(`v\d+`) detection to prevent versioned APIs parametrized.
 
 **Known Caveats**:
 The algorithm may provide false clustering in some edge cases (although it doesn't hurt at all in APM scenarios). 
@@ -64,7 +65,3 @@ This project rely on gRPC to communicate with the Apache SkyWalking AI pipeline.
 in the `server/proto/' folder. 
 
 Compile the proto by running `make gen` or simply `make env` if you are get started from a bare environment.
-
-### TODO
-Try catch statements to handle uncovered algorithm errors
-
