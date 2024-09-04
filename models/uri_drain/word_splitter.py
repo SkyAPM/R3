@@ -14,7 +14,7 @@
 
 import re
 
-from cachetools import LRUCache, Cache
+from cachetools import LRUCache
 from textblob import TextBlob
 
 last_word_correct_lru = LRUCache(1000)

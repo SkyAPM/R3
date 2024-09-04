@@ -11,8 +11,6 @@ from cachetools import LRUCache, Cache
 from models.uri_drain.word_splitter import check_all_word_correct
 from models.utils.simple_profiler import Profiler, NullProfiler
 
-from textblob import TextBlob
-
 import logger
 
 
