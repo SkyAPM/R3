@@ -23,9 +23,10 @@ WORKDIR /app
 COPY . /app
 
 # Build the project with make
-RUN python3 -m pip install grpcio-tools==1.66.0 packaging \
+RUN pip install --upgrade pip \
+  && pip install grpcio-tools==1.66.0 packaging \
 	&& python3 -m tools.grpc_gen \
-    && python3 -m pip install .[all]
+  && python3 -m pip install .[all]
 
 
 # Expose the gRPC service port
