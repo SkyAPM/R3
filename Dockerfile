@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Stage 1: Builder stage with full Python image
-FROM python:3.11-slim as final
+FROM python:3.11-slim AS final
 
 ENV PYTHONUNBUFFERED=1
 
@@ -23,11 +23,7 @@ WORKDIR /app
 COPY . /app
 
 # Build the project with make
-RUN pip install --upgrade pip \
-  && pip install grpcio-tools==1.66.0 packaging \
-	&& python3 -m tools.grpc_gen \
-  && python3 -m pip install .[all]
-
+RUN make env && make install
 
 # Expose the gRPC service port
 EXPOSE 17128
