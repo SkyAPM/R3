@@ -20,10 +20,16 @@ on:
       - main
     tags:
       - v*.*.*
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Commit SHA or tag to build'
+        required: false
+        default: 'main'
 
 jobs:
   build-docker:
-    # if: github.repository == 'SkyAPM/R3'
+    if: github.repository == 'SkyAPM/R3'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -32,6 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.inputs.ref }}
           submodules: true
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
