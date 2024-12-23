@@ -88,7 +88,7 @@ pep8-naming = "^0.13.2"
 darglint = "^1.8.1"
 flake8-eradicate = "^1.4.0"
 flake8-docstrings = "^1.6.0"
-flake8-bugbear = "^22.9.23"
+flake8-bugbear = "^23.3.12"
 flake8-comprehensions = "^3.10.0"
 flake8-2020 = "^1.7.0"
 
