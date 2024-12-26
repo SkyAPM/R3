@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Stage 1: Builder stage with full Python image
-FROM python:3.11-slim as final
+FROM python:3.13-slim as final
 
 ENV PYTHONUNBUFFERED=1
 
@@ -23,7 +23,7 @@ WORKDIR /app
 COPY . /app
 
 # Build the project with make
-RUN python3 -m pip install grpcio-tools==1.66.0 packaging \
+RUN python3 -m pip install grpcio-tools==1.68.0 packaging \
 	&& python3 -m tools.grpc_gen \
     && python3 -m pip install .[all]
 
