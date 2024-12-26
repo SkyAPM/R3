@@ -97,8 +97,6 @@ jobs:
           find docker-image -name "*.tar" -exec rm {} \;
       - name: Setup Python Path
         run: echo "PYTHONPATH=$(pwd)"  >> $GITHUB_ENV
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
       - name: Run E2E test
         uses: apache/skywalking-infra-e2e@cf589b4a0b9f8e6f436f78e9cfd94a1ee5494180
         with:

@@ -22,7 +22,7 @@ setup:
     - name: make install
       command: make install
     - name: install dependency for client.py
-      command: pip install -r $(pwd)/test/e2e/requirements.txt
+      command: pip install -r test/e2e/requirements.txt
     - name: adding python path
       command: export PYTHONPATH=$(pwd)
 
