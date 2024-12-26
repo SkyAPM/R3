@@ -36,5 +36,6 @@ header:
     - '.idea*'
     - 'models'  # TODO: should be changed to drain3-related only, match not working on windows (\\) vs (/)?
     - '**/*.proto'
+    - '.github'
 
   comment: on-failure
