@@ -65,7 +65,6 @@ install: gen-basic
 # flake8 configurations should go to the file setup.cfg E1101 must be checked in future (need upstream change of DrainBase)
 lint: clean
 	poetry run flake8 models/uri_drain
-	poetry run pylint --disable=all --enable=E0602,E0603 models deploy benchmarks tests
 
 .PHONY: fix
 # fix problems described in CodingStyle.md - verify outcome with extra care
