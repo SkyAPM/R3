@@ -559,12 +559,12 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.9.1"
+version = "5.10.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "gradio-5.9.1-py3-none-any.whl", hash = "sha256:de5e522d39b804c448e9ee4d19c92cd8864233390638b54c0c5daa1ba6d0da61"},
+    {file = "gradio-5.10.0-py3-none-any.whl", hash = "sha256:a9369294b6a555a4f34f34d690c891bb73f55c2ed437e8252c6115e835a2e379"},
 ]
 
 [package.dependencies]
@@ -573,7 +573,7 @@ anyio = ">=3.0,<5.0"
 audioop-lts = {version = "<1.0", markers = "python_version >= \"3.13\""}
 fastapi = ">=0.115.2,<1.0"
 ffmpy = "*"
-gradio-client = "1.5.2"
+gradio-client = "1.5.3"
 httpx = ">=0.24.1"
 huggingface-hub = ">=0.25.1"
 jinja2 = "<4.0"
@@ -602,13 +602,13 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "1.5.2"
+version = "1.5.3"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "gradio_client-1.5.2-py3-none-any.whl", hash = "sha256:e25615059e540247724856fef15b3974cc9290b158356d4e541b0105c0342514"},
-    {file = "gradio_client-1.5.2.tar.gz", hash = "sha256:96693ed7d28558ad730ada1045c50182bfc49987aa2104f56c168886d4ad2635"},
+    {file = "gradio_client-1.5.3-py3-none-any.whl", hash = "sha256:50f8ab48f7c4eccdb4c25030343271511391acbde5fbf64fcd03bada56dc8ee9"},
+    {file = "gradio_client-1.5.3.tar.gz", hash = "sha256:f2b41278d1c7748b1060b6f97cde6660535baabc946031d0485890dba9855727"},
 ]
 
 [package.dependencies]
@@ -2384,4 +2384,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.13"
-content-hash = "d514cd7e482f16d74a6c5e72807b449b27b358598541098774a22eac72dedbeb"
+content-hash = "c741539f5e4b9923cf8f401a79290a93b582afb83da865294af0bcf262c340dd"
