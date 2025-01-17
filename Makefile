@@ -12,7 +12,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-VERSION ?= next
+HUB ?= ghcr.io/skyapm
+PROJECT ?= r3
+VERSION ?= $(shell git rev-parse --short HEAD)
 
 # determine host platform
 ifeq ($(OS),Windows_NT)
@@ -87,6 +89,20 @@ upload-test: package
 .PHONY: upload
 upload: package
 	poetry run twine upload dist/*
+
+.PHONY: docker
+docker:
+	docker build . -t $(HUB)/$(PROJECT):$(VERSION) -t $(HUB)/$(PROJECT):latest
+
+.PHONY: docker-push
+docker-push:
+	@{\
+		docker buildx create --use --driver docker-container --name main ;\
+		docker buildx build --push --platform linux/amd64,linux/arm64 --provenance=false -t $(HUB)/$(PROJECT):$(VERSION) -t $(HUB)/$(PROJECT):latest . ;\
+		build_exit_code=$$? ;\
+		docker buildx rm main ;\
+		exit $$build_exit_code;\
+	}
 
 .PHONY: clean
 # FIXME change to python based so we can run on windows
