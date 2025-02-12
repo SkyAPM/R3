@@ -76,7 +76,7 @@ textblob = "0.19.0"
 
 
 [tool.poetry.group.lint.dependencies]
-pylint = '3.3.3'
+pylint = '3.3.4'
 flake8 = "^7.1.1"
 # isort = "^5.10.1"
 unify = "^0.5"
@@ -93,7 +93,7 @@ flake8-2020 = "^1.7.0"
 
 
 [tool.poetry.group.demo.dependencies]
-gradio = "^5.13.1"
+gradio = "^5.16.0"
 
 [build-system]
 requires = ["poetry-core"]
