@@ -61,7 +61,7 @@ jobs:
           docker build -t r3:latest .
           docker save -o r3-image.tar r3:latest
       - name: Upload docker images
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docker-image
           path: r3-image.tar
@@ -86,7 +86,7 @@ jobs:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
           fi
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         name: Download docker images
         with:
           name: docker-image
