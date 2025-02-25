@@ -559,12 +559,12 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.17.1"
+version = "5.18.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "gradio-5.17.1-py3-none-any.whl", hash = "sha256:0a128cafbe65a2e184bea1f3bc5e2d1cc1d3d477f4db340f4aefc53a15a00e6e"},
+    {file = "gradio-5.18.0-py3-none-any.whl", hash = "sha256:0ec8461de962a851a9c3dc75c6707dddd942f7b292dec425acc6d5dcfa685902"},
 ]
 
 [package.dependencies]
@@ -573,7 +573,7 @@ anyio = ">=3.0,<5.0"
 audioop-lts = {version = "<1.0", markers = "python_version >= \"3.13\""}
 fastapi = ">=0.115.2,<1.0"
 ffmpy = "*"
-gradio-client = "1.7.1"
+gradio-client = "1.7.2"
 httpx = ">=0.24.1"
 huggingface-hub = ">=0.28.1"
 jinja2 = "<4.0"
@@ -602,13 +602,13 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "1.7.1"
+version = "1.7.2"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "gradio_client-1.7.1-py3-none-any.whl", hash = "sha256:d7737bc473a2093549c06004379c42f0a3510a98095cf7cea9033837e252149f"},
-    {file = "gradio_client-1.7.1.tar.gz", hash = "sha256:6ecd3a537c6c076cb1b351c2d7ce5906070d2e1b3181163609bfa4a4c4f3040e"},
+    {file = "gradio_client-1.7.2-py3-none-any.whl", hash = "sha256:50d61b4db3e87639430a121a7cde4303055486ed72a5035edae94b4fbe6a0e6b"},
+    {file = "gradio_client-1.7.2.tar.gz", hash = "sha256:e3f1e1a63292a06a22a748719849bc6dbacdc89645f089c219f3d7a24e68d183"},
 ]
 
 [package.dependencies]
@@ -617,7 +617,7 @@ httpx = ">=0.24.1"
 huggingface-hub = ">=0.19.3"
 packaging = "*"
 typing-extensions = ">=4.0,<5.0"
-websockets = ">=10.0,<15.0"
+websockets = ">=10.0,<16.0"
 
 [[package]]
 name = "grpcio"
@@ -2384,4 +2384,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.13"
-content-hash = "4d609c094bdaab5205a6b4e68a0fc1d660b77d74de1046896dd399464dd6b903"
+content-hash = "33f9e11e41602df8e2a2dec6cb47f9e76cd80333ce6f5f53005e1306eea87c25"
