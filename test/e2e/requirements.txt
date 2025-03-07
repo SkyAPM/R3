@@ -78,7 +78,6 @@ python-dateutil==2.9.0.post0
 python-multipart==0.0.20
 pytz==2024.2
 PyYAML==6.0.2
-R3 @ file:///Users/hanliu/Documents/python_project/github/R3
 referencing==0.35.1
 regex==2024.11.6
 requests==2.32.3
