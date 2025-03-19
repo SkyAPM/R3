@@ -590,14 +590,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.21.0"
+version = "5.22.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-5.21.0-py3-none-any.whl", hash = "sha256:9666eae7aa86590fa483e6f8335923181f5c174a20be8d558c37eebbd0732c5d"},
-    {file = "gradio-5.21.0.tar.gz", hash = "sha256:e88f790d46d42c9a0a8eb70c8d43cfeba0cc6dd663d98b304209439d12bbb0f8"},
+    {file = "gradio-5.22.0-py3-none-any.whl", hash = "sha256:c8a076ff8a422ad7335a277c2e6aad12e0e11741aa8a8eddcc9c8d164feb2f16"},
+    {file = "gradio-5.22.0.tar.gz", hash = "sha256:91faaa9a5c7505c923c7ce85459d30af8df9566d70013ff459e5269ff9454ece"},
 ]
 
 [package.dependencies]
@@ -606,12 +606,12 @@ anyio = ">=3.0,<5.0"
 audioop-lts = {version = "<1.0", markers = "python_version >= \"3.13\""}
 fastapi = ">=0.115.2,<1.0"
 ffmpy = "*"
-gradio-client = "1.7.2"
+gradio-client = "1.8.0"
 groovy = ">=0.1,<1.0"
 httpx = ">=0.24.1"
 huggingface-hub = ">=0.28.1"
 jinja2 = "<4.0"
-markupsafe = ">=2.0,<3.0"
+markupsafe = ">=2.0,<4.0"
 numpy = ">=1.0,<3.0"
 orjson = ">=3.0,<4.0"
 packaging = "*"
@@ -636,14 +636,14 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "1.7.2"
+version = "1.8.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio_client-1.7.2-py3-none-any.whl", hash = "sha256:50d61b4db3e87639430a121a7cde4303055486ed72a5035edae94b4fbe6a0e6b"},
-    {file = "gradio_client-1.7.2.tar.gz", hash = "sha256:e3f1e1a63292a06a22a748719849bc6dbacdc89645f089c219f3d7a24e68d183"},
+    {file = "gradio_client-1.8.0-py3-none-any.whl", hash = "sha256:27a3ab5278a44d57d1d05a86de67cec5f7370e540600d11816744a620addb967"},
+    {file = "gradio_client-1.8.0.tar.gz", hash = "sha256:a58c520c73fa7ff8bef54e41b19df2cd9071fd9d0cc00475eb397842baed19c8"},
 ]
 
 [package.dependencies]
@@ -2509,4 +2509,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "d667164d125336b3e3094f8d08b224c4cb27cf42959b8902fd7152403fc575eb"
+content-hash = "a0eea1ab73c2a8e12c5b302bbee107426d06c7ce43edc11cecd8887519b61a85"
