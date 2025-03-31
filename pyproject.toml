@@ -56,7 +56,7 @@ generate-setup-file = true
 python = "^3.13"  # Gradio needs 3.8+
 grpcio = "<=1.70.0"
 grpcio-tools = "<=1.70.0"
-jsonpickle = "^4.0.2"
+jsonpickle = "^4.0.5"
 cachetools = "^5.5.2"
 nltk = "^3.8.1"
 inflect = "^7.5.0"
@@ -77,7 +77,7 @@ textblob = "0.19.0"
 
 [tool.poetry.group.lint.dependencies]
 pylint = '3.3.6'
-flake8 = "^7.1.2"
+flake8 = "^7.2.0"
 # isort = "^5.10.1"
 unify = "^0.5"
 flynt = "^1.0"
