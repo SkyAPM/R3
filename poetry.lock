@@ -590,14 +590,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.23.2"
+version = "5.23.3"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-5.23.2-py3-none-any.whl", hash = "sha256:2d6acc79fe1a10b6c91b966ab3e4a835a89403f3a28d52d2bbc9db7eb77224a3"},
-    {file = "gradio-5.23.2.tar.gz", hash = "sha256:1bfcfee57ab8d16e7632c1f98bd3f641cf835b34ca8d2e5b0416d74f76f05865"},
+    {file = "gradio-5.23.3-py3-none-any.whl", hash = "sha256:4176c4f8e49e5338baea0c844e884c28711d4d673c9ea2b4e74f51f68a2d6f2d"},
+    {file = "gradio-5.23.3.tar.gz", hash = "sha256:15e1844bd488f2b1f62ab8ac510231ee6d552190aa3fbc0eaaf1c384e7b08e12"},
 ]
 
 [package.dependencies]
@@ -2509,4 +2509,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "64d8fab55b043eeffc090629ab8cdd356c0dfcb411477c384d3bdbeeda8eafee"
+content-hash = "ddc57706621956374ad8a03401ebf8b5aef42bc62a34b1da07bd82765e99a72a"
