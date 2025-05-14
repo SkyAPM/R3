@@ -25,7 +25,7 @@ flake8-comprehensions==3.16.0
 flake8-docstrings==1.7.0
 flake8-eradicate==1.5.0
 flake8-use-fstring==1.4
-Flask==3.1.0
+Flask==3.1.1
 flynt==1.0.1
 fonttools==4.55.3
 fsspec==2024.12.0
