@@ -30,7 +30,7 @@ flynt==0.76
 fonttools==4.55.3
 fsspec==2024.12.0
 gradio==5.11.0
-gradio_client==0.6.1
+gradio_client==1.5.3
 grpcio==1.68.0
 grpcio-tools==1.68.0
 h11==0.14.0
