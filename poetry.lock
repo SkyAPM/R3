@@ -591,14 +591,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.30.0"
+version = "5.31.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-5.30.0-py3-none-any.whl", hash = "sha256:47508c4a69789f9433a1d95c5ffb5893570573431d05754394e2ffeaa6fbc2d3"},
-    {file = "gradio-5.30.0.tar.gz", hash = "sha256:83d2dfaf5ecb2911e1aa61ccbee4aa62b7bde112396fb107237d5d8134b6131b"},
+    {file = "gradio-5.31.0-py3-none-any.whl", hash = "sha256:4a31956c7290ce1277db07f15f197b602df2e7be147083136265d52e7887b156"},
+    {file = "gradio-5.31.0.tar.gz", hash = "sha256:fba0c84d69cf489938eb64bef4c19d53300eb9af62e8cc0b12e02ae9072b7623"},
 ]
 
 [package.dependencies]
@@ -633,7 +633,7 @@ urllib3 = {version = ">=2.0,<3.0", markers = "sys_platform == \"emscripten\""}
 uvicorn = {version = ">=0.14.0", markers = "sys_platform != \"emscripten\""}
 
 [package.extras]
-mcp = ["mcp (>=1.6.0,<2.0.0)", "pydantic (>=2.11) ; sys_platform != \"emscripten\""]
+mcp = ["mcp (==1.9.0)", "pydantic (>=2.11) ; sys_platform != \"emscripten\""]
 oauth = ["authlib", "itsdangerous"]
 
 [[package]]
@@ -1013,14 +1013,14 @@ files = [
 
 [[package]]
 name = "jsonpickle"
-version = "4.0.5"
+version = "4.1.0"
 description = "jsonpickle encodes/decodes any Python object to/from JSON"
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "jsonpickle-4.0.5-py3-none-any.whl", hash = "sha256:b4ac7d0a75ddcdfd93445737f1d36ff28768690d43e54bf5d0ddb1d915e580df"},
-    {file = "jsonpickle-4.0.5.tar.gz", hash = "sha256:f299818b39367c361b3f26bdba827d4249ab5d383cd93144d0f94b5417aacb35"},
+    {file = "jsonpickle-4.1.0-py3-none-any.whl", hash = "sha256:763f837a0b2586b45424d9a07108a798d9feac52f3a152606336f7f9e1a22ffa"},
+    {file = "jsonpickle-4.1.0.tar.gz", hash = "sha256:d417d6d693a63fb137e53334164aba618d18aca05a4fd025ff01c2ec134ae4c8"},
 ]
 
 [package.extras]
@@ -2511,4 +2511,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "41bdf83b1515aad5a8d103ec8aa22ce728d5374e44deda90a9ff9929039191e7"
+content-hash = "a92db3974acafb07df518081daf000b254e2565c969ebeb01533d312ff80e172"
