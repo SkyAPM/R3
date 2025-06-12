@@ -162,7 +162,7 @@ version = "2024.12.14"
 description = "Python package for providing Mozilla's CA Bundle."
 optional = false
 python-versions = ">=3.6"
-groups = ["demo", "dev"]
+groups = ["demo"]
 files = [
     {file = "certifi-2024.12.14-py3-none-any.whl", hash = "sha256:1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56"},
     {file = "certifi-2024.12.14.tar.gz", hash = "sha256:b650d30f370c2b724812bee08008be0c4163b163ddaec3f2546c1caf65f191db"},
@@ -174,7 +174,7 @@ version = "3.4.1"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 optional = false
 python-versions = ">=3.7"
-groups = ["demo", "dev"]
+groups = ["demo"]
 files = [
     {file = "charset_normalizer-3.4.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:91b36a978b5ae0ee86c394f5a54d6ef44db1de0815eb43de826d41d21e4af3de"},
     {file = "charset_normalizer-3.4.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7461baadb4dc00fd9e0acbe254e3d7d2112e7f92ced2adc96e54ef6501c5f176"},
@@ -591,14 +591,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.33.1"
+version = "5.33.2"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-5.33.1-py3-none-any.whl", hash = "sha256:c4329b04280d62041fbf0113e94fb5c4d20e0555ce1ac69174bf98225350159b"},
-    {file = "gradio-5.33.1.tar.gz", hash = "sha256:f74c737aa92fc02b4d7dca7e50ee13ddce548aa16c9fcbe907ceabf93722f94d"},
+    {file = "gradio-5.33.2-py3-none-any.whl", hash = "sha256:34cf9c5b5c18fed7dab9c976f30b3f7f3378a0ef9d4e236e1c5dcc4bd6a07f07"},
+    {file = "gradio-5.33.2.tar.gz", hash = "sha256:6c36c878dfb1f02a9f002dfd86ef83d26e0f11e47c6fe9cc260d8d42f390ca73"},
 ]
 
 [package.dependencies]
@@ -901,7 +901,7 @@ version = "3.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
 optional = false
 python-versions = ">=3.6"
-groups = ["demo", "dev"]
+groups = ["demo"]
 files = [
     {file = "idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3"},
     {file = "idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9"},
@@ -2035,7 +2035,7 @@ version = "2.32.4"
 description = "Python HTTP for Humans."
 optional = false
 python-versions = ">=3.8"
-groups = ["demo", "dev"]
+groups = ["demo"]
 files = [
     {file = "requests-2.32.4-py3-none-any.whl", hash = "sha256:27babd3cda2a6d50b30443204ee89830707d396671944c998b5975b031ac2b2c"},
     {file = "requests-2.32.4.tar.gz", hash = "sha256:27d0316682c8a29834d3264820024b62a36942083d52caf2f14c0591336d3422"},
@@ -2369,7 +2369,7 @@ version = "2.3.0"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 optional = false
 python-versions = ">=3.9"
-groups = ["demo", "dev"]
+groups = ["demo"]
 files = [
     {file = "urllib3-2.3.0-py3-none-any.whl", hash = "sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df"},
     {file = "urllib3-2.3.0.tar.gz", hash = "sha256:f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d"},
@@ -2502,4 +2502,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "8cf876d9b4f9615b689a881278d64da6695bc3091ff8926ae7c36c407c659da8"
+content-hash = "d8fddf93e2aa0b2e900ec5e42550edcc55742ea37231fdf6f02769be228adb6a"
