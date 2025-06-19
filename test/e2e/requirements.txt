@@ -97,7 +97,7 @@ typing_extensions==4.12.2
 tzdata==2024.2
 unify==0.5
 untokenize==0.1.1
-urllib3==2.3.0
+urllib3==2.5.0
 uvicorn==0.34.0
 websockets==11.0.3
 Werkzeug==3.1.3
