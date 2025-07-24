@@ -62,7 +62,7 @@ nltk = "^3.8.1"
 inflect = "^7.5.0"
 pytest = "^8.4.1"
 flask = "^3.1.1"
-textblob = "0.19.0"
+pyspellchecker = "^0.8.3"
 
 
 

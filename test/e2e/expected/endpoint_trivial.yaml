@@ -23,4 +23,5 @@ patterns:
     - /api/v999/orders/{var}
     - /user/{var}/post/{var}
     - /user/{var}/profile/{var}/compare/{var}/profile/{var}
+    - http://www.google.com/api/v1/users/{var}
 version: '1'

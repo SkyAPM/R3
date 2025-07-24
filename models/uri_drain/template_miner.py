@@ -91,7 +91,8 @@ class TemplateMiner:
             profiler=self.profiler,
             param_str=param_str,
             # param_extra=param_extra,  # MODIFIED:: for URI Drain < It is now a dict since contains multiple types
-            parametrize_numeric_tokens=self.config.parametrize_numeric_tokens
+            parametrize_numeric_tokens=self.config.parametrize_numeric_tokens,
+            customized_words_file=self.config.customized_words_file,
         )
 
         self.masker = LogMasker(self.config.masking_instructions, self.config.mask_prefix, self.config.mask_suffix)
