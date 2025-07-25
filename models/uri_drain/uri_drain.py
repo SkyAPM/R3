@@ -8,7 +8,7 @@ from typing import List, Dict, Sequence
 
 from cachetools import LRUCache, Cache
 
-from models.uri_drain.word_splitter import check_all_word_correct
+from models.uri_drain.word_splitter import check_all_word_correct, load_customized_words
 from models.utils.simple_profiler import Profiler, NullProfiler
 
 import logger
@@ -49,6 +49,8 @@ class LogCluster:  # TODO Modified:: Changed to URICluster
             return f'/{template}'
 
     def adding_url(self, url: str):
+        # Remove spaces from the URL to ensure uniqueness
+        url = url.replace(' ', '')
         if self.latest_urls.__contains__(url):
             return
         self.latest_urls[url] = True
@@ -131,7 +133,8 @@ class DrainBase:
                  profiler: Profiler = NullProfiler(),
                  param_str="{var}",  # Modified:: required param_str
                  # param_extra=None,  # Modified:: Added param_extra
-                 parametrize_numeric_tokens=True):
+                 parametrize_numeric_tokens=True,
+                 customized_words_file=None):
         """
         Create a new Drain instance.
 
@@ -175,6 +178,8 @@ class DrainBase:
         # key: int, value: LogCluster
         self.id_to_cluster = {} if max_clusters is None else LogClusterCache(maxsize=max_clusters)
         self.clusters_counter = 0
+
+        load_customized_words(customized_words_file)
 
     @property
     def clusters(self):
@@ -376,10 +381,11 @@ class Drain(DrainBase):
                  profiler: Profiler = NullProfiler(),
                  param_str="<*>",
                  # param_extra=None,  # Modified:: Added param_extra
-                 parametrize_numeric_tokens=True):
+                 parametrize_numeric_tokens=True,
+                 customized_words_file=None):
         super().__init__(depth, sim_th, max_children, max_clusters, combine_min_url_count, extra_delimiters, profiler, param_str,
                          # param_extra,
-                         parametrize_numeric_tokens)
+                         parametrize_numeric_tokens, customized_words_file)
 
     def tree_search(self, root_node: Node, tokens: list, sim_th: float, include_params: bool):
 
@@ -519,8 +525,8 @@ class Drain(DrainBase):
             if (index == 0 or index == 1) and '.' in token1 and token1 != token2:
                 # self.logger.debug('this is domain mismatch!')
                 return 0.0, 0
-            # if all new tokens are words, then we can consider it cannot be combined
-            if token1 != token2 and (token1.word_correct or token2.word_correct):
+            # if all new tokens are words, token1(cluster_templates) is not parameter, then we can consider it cannot be combined
+            if token1 != token2 and ((token1 != self.param_str and token1.word_correct) or token2.word_correct):
                 return -1, -1
             # if token1 in self.possible_params or token1 == self.param_str:
             if token1 == self.param_str:

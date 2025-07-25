@@ -32,6 +32,7 @@ in_log_file = 'Endpoint200_hard.txt'
 config = TemplateMinerConfig()
 config.load(dirname(__file__) + "/uri_drain.ini")
 config.profiling_enabled = True
+config.customized_words_file = dirname(__file__) + "/customized_words.txt"
 template_miner = TemplateMiner(config=config)
 
 

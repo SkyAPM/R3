@@ -57,6 +57,9 @@ The following URL would keep the original URL, not parametrized, since the all p
 * /api/product_sale
 * /api/ProductSale
 
+If the words are customized, not a word. Such as some application name, such as `hikaricp`, then R3 support customized word. 
+Please refer to the [configuration](models/Configuration.md) `customized_words_file` for more details.
+
 #### Lower Sample Count
 
 The following URL would keep the original URL, not parametrized, since the sample count is lower than the threshold(`combine_min_url_count`).

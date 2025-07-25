@@ -34,6 +34,7 @@ class TemplateMinerConfig:
         self.mask_suffix = ">"
         self.parameter_extraction_cache_capacity = 3000
         self.parametrize_numeric_tokens = True
+        self.customized_words_file = None
 
     def load(self, config_filename: str):
         parser = configparser.ConfigParser()
@@ -85,6 +86,8 @@ class TemplateMinerConfig:
                                                                    self.drain_analysis_min_url_count)
         self.drain_combine_min_url_count = self.read_config_value(parser, section_drain, 'combine_min_url_count', int,
                                                                   self.drain_combine_min_url_count)
+        self.customized_words_file = self.read_config_value(parser, section_drain, 'customized_words_file', str,
+                                                            self.customized_words_file)
 
         masking_instructions = []
         masking_list = json.loads(masking_instructions_str)

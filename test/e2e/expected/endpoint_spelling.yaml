@@ -12,16 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-patterns:
-    - /api/v1/accounts/{var}
-    - /api/v1/invoices/{var}
-    - /api/v1/orders/{var}
-    - /api/v1/posts/{var}
-    - /api/v1/products/{var}
-    - /api/v1/users/{var}
-    - /api/v2/data/users/{var}
-    - /api/v999/orders/{var}
-    - /user/{var}/post/{var}
-    - /user/{var}/profile/{var}/compare/{var}/profile/{var}
-    - http://www.google.com/api/v1/users/{var}
+patterns: []
 version: '1'
