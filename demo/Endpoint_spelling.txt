@@ -1,0 +1,6 @@
+/api/test/serviceInfo
+/api/test/serviceOffline
+/api/test/serviceCenter
+/api/data/users
+/api/data/userLevel
+/api/data/userCount

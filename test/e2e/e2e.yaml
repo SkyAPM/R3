@@ -58,3 +58,8 @@ verify:
       expected: expected/feed-ok.yaml
     - query: python test/e2e/client.py fetch test5
       expected: expected/endpoint_hard_3k.yaml
+
+    - query: python test/e2e/client.py feed test6 demo/Endpoint_spelling.txt && sleep 1
+      expected: expected/feed-ok.yaml
+    - query: python test/e2e/client.py fetch test6
+      expected: expected/endpoint_spelling.yaml
