@@ -54,8 +54,8 @@ generate-setup-file = true
 
 [tool.poetry.dependencies]
 python = "^3.13"  # Gradio needs 3.8+
-grpcio = "<=1.73.1"
-grpcio-tools = "<=1.73.1"
+grpcio = "<=1.74.0"
+grpcio-tools = "<=1.74.0"
 jsonpickle = "^4.1.1"
 cachetools = "^6.1.0"
 nltk = "^3.8.1"
@@ -93,7 +93,7 @@ flake8-2020 = "^1.7.0"
 
 
 [tool.poetry.group.demo.dependencies]
-gradio = "^5.38.1"
+gradio = "^5.38.2"
 
 [build-system]
 requires = ["poetry-core"]
