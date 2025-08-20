@@ -61,7 +61,7 @@ cachetools = "^6.1.0"
 nltk = "^3.8.1"
 inflect = "^7.5.0"
 pytest = "^8.4.1"
-flask = "^3.1.1"
+flask = "^3.1.2"
 pyspellchecker = "^0.8.3"
 
 
@@ -93,7 +93,7 @@ flake8-2020 = "^1.7.0"
 
 
 [tool.poetry.group.demo.dependencies]
-gradio = "^5.42.0"
+gradio = "^5.43.1"
 
 [build-system]
 requires = ["poetry-core"]
