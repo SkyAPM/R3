@@ -566,14 +566,14 @@ dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "pre-commit", "pytest",
 
 [[package]]
 name = "flake8-comprehensions"
-version = "3.16.0"
+version = "3.17.0"
 description = "A flake8 plugin to help you write better list/set/dict comprehensions."
 optional = false
 python-versions = ">=3.9"
 groups = ["lint"]
 files = [
-    {file = "flake8_comprehensions-3.16.0-py3-none-any.whl", hash = "sha256:7c1eadc9d22e765f39857798febe7766b4d9c519793c6c149e3e13bf99693f70"},
-    {file = "flake8_comprehensions-3.16.0.tar.gz", hash = "sha256:9cbf789905a8f03f9d350fb82b17b264d9a16c7ce3542b2a7b871ef568cafabe"},
+    {file = "flake8_comprehensions-3.17.0-py3-none-any.whl", hash = "sha256:3943a9c6f2593c3bc5cc64106c2f89d63c6ecd49c8343597f8257b8fcfc8b0a2"},
+    {file = "flake8_comprehensions-3.17.0.tar.gz", hash = "sha256:bf4fa102b2bf4d6c9e999e29e4b2724cbadffb70b937600fc782161be4dc0f4a"},
 ]
 
 [package.dependencies]
@@ -2642,4 +2642,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "90e4ffd52d5976ef811005ee0e3ef49a2fff861b57afd5141e2792fbc73629e3"
+content-hash = "ebda2bc015edd1c29d3dc1390f30e50897663fb1cfe42b66054ee32eb38a7cb7"
