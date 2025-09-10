@@ -88,7 +88,7 @@ darglint = "^1.8.1"
 flake8-eradicate = "^1.4.0"
 flake8-docstrings = "^1.6.0"
 flake8-bugbear = "^24.12.12"
-flake8-comprehensions = "^3.10.0"
+flake8-comprehensions = "^3.17.0"
 flake8-2020 = "^1.7.0"
 
 
