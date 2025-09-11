@@ -712,14 +712,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.44.1"
+version = "5.45.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-5.44.1-py3-none-any.whl", hash = "sha256:cb22dd519c3bb2f8c7960cdcc23ca3b869511c85e320f486d7aef6e3627f97b9"},
-    {file = "gradio-5.44.1.tar.gz", hash = "sha256:8527837aa6de4b0d2398dab11baac8e3eac9da69140ed0da6efc6ac497fa818d"},
+    {file = "gradio-5.45.0-py3-none-any.whl", hash = "sha256:71f3fdefa9a0f64d4bf48ebdb132e287bf81679be094124144dd55fbcf538097"},
+    {file = "gradio-5.45.0.tar.gz", hash = "sha256:a45a0c868566d1db27cf77994a8f529fe5ce5b2673b9d2b9f3d99b4fbc1f89c7"},
 ]
 
 [package.dependencies]
@@ -729,7 +729,7 @@ audioop-lts = {version = "<1.0", markers = "python_version >= \"3.13\""}
 brotli = ">=1.1.0"
 fastapi = ">=0.115.2,<1.0"
 ffmpy = "*"
-gradio-client = "1.12.1"
+gradio-client = "1.13.0"
 groovy = ">=0.1,<1.0"
 httpx = ">=0.24.1,<1.0"
 huggingface-hub = ">=0.33.5,<1.0"
@@ -760,14 +760,14 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "1.12.1"
+version = "1.13.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio_client-1.12.1-py3-none-any.whl", hash = "sha256:37c0bcd0e6b3794b2b2e0b5039696d6962d8125bdb96960ad1b79412326b1664"},
-    {file = "gradio_client-1.12.1.tar.gz", hash = "sha256:64ae7b1d951482194e3a2f8d20cd3fbdaaa13418ee988445d3c9edb28da50ea2"},
+    {file = "gradio_client-1.13.0-py3-none-any.whl", hash = "sha256:4489ebd07ae40c6cc7a6a02cf60a53e9e3345aa5342a3814c356775bbad64bbc"},
+    {file = "gradio_client-1.13.0.tar.gz", hash = "sha256:07de7e8e58553335d56e0c7db6af60f1205fd1f167bf07f3e0f587888695a8f3"},
 ]
 
 [package.dependencies]
@@ -2642,4 +2642,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "ebda2bc015edd1c29d3dc1390f30e50897663fb1cfe42b66054ee32eb38a7cb7"
+content-hash = "4e71b2f9fe775a3f8a4c2eadf4c4bd10c2b7e44e16d8dc8ca57c1f6710031708"
