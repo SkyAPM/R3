@@ -47,14 +47,14 @@ trio = ["trio (>=0.26.1)"]
 
 [[package]]
 name = "astroid"
-version = "3.3.8"
+version = "4.0.1"
 description = "An abstract syntax tree for Python with inference support."
 optional = false
-python-versions = ">=3.9.0"
+python-versions = ">=3.10.0"
 groups = ["lint"]
 files = [
-    {file = "astroid-3.3.8-py3-none-any.whl", hash = "sha256:187ccc0c248bfbba564826c26f070494f7bc964fd286b6d9fff4420e55de828c"},
-    {file = "astroid-3.3.8.tar.gz", hash = "sha256:a88c7994f914a4ea8572fac479459f4955eeccc877be3f2d959a33273b0cf40b"},
+    {file = "astroid-4.0.1-py3-none-any.whl", hash = "sha256:37ab2f107d14dc173412327febf6c78d39590fdafcb44868f03b6c03452e3db0"},
+    {file = "astroid-4.0.1.tar.gz", hash = "sha256:0d778ec0def05b935e198412e62f9bcca8b3b5c39fdbe50b0ba074005e477aab"},
 ]
 
 [[package]]
@@ -269,14 +269,14 @@ files = [
 
 [[package]]
 name = "cachetools"
-version = "6.2.0"
+version = "6.2.1"
 description = "Extensible memoizing collections and decorators"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "cachetools-6.2.0-py3-none-any.whl", hash = "sha256:1c76a8960c0041fcc21097e357f882197c79da0dbff766e7317890a65d7d8ba6"},
-    {file = "cachetools-6.2.0.tar.gz", hash = "sha256:38b328c0889450f05f5e120f56ab68c8abaf424e1275522b138ffc93253f7e32"},
+    {file = "cachetools-6.2.1-py3-none-any.whl", hash = "sha256:09868944b6dde876dfd44e1d47e18484541eaf12f26f29b7af91b26cc892d701"},
+    {file = "cachetools-6.2.1.tar.gz", hash = "sha256:3f391e4bd8f8bf0931169baf7456cc822705f4e2a31f840d218f445b9a854201"},
 ]
 
 [[package]]
@@ -711,14 +711,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "5.49.0"
+version = "5.49.1"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-5.49.0-py3-none-any.whl", hash = "sha256:50cba9411c02e89768ad24ee3cd5898783cb60e8abf426bda9e04bef53e0d966"},
-    {file = "gradio-5.49.0.tar.gz", hash = "sha256:19702c824350640201d9f4b150b3efd219363ebe6390bd3c94c9894880d20d15"},
+    {file = "gradio-5.49.1-py3-none-any.whl", hash = "sha256:1b19369387801a26a6ba7fd2f74d46c5b0e2ac9ddef14f24ddc0d11fb19421b7"},
+    {file = "gradio-5.49.1.tar.gz", hash = "sha256:c06faa324ae06c3892c8b4b4e73c706c4520d380f6b9e52a3c02dc53a7627ba9"},
 ]
 
 [package.dependencies]
@@ -1944,21 +1944,21 @@ windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "pylint"
-version = "3.3.9"
+version = "4.0.0"
 description = "python code static checker"
 optional = false
-python-versions = ">=3.9.0"
+python-versions = ">=3.10.0"
 groups = ["lint"]
 files = [
-    {file = "pylint-3.3.9-py3-none-any.whl", hash = "sha256:01f9b0462c7730f94786c283f3e52a1fbdf0494bbe0971a78d7277ef46a751e7"},
-    {file = "pylint-3.3.9.tar.gz", hash = "sha256:d312737d7b25ccf6b01cc4ac629b5dcd14a0fcf3ec392735ac70f137a9d5f83a"},
+    {file = "pylint-4.0.0-py3-none-any.whl", hash = "sha256:196b92a85204bb0c0a416a6bb324f6185e59ff1d687ee1d614bf0abf34a348e8"},
+    {file = "pylint-4.0.0.tar.gz", hash = "sha256:62da212808c0681e49ffb125f0a994c685d912cf19ae373075649ebb5870ec28"},
 ]
 
 [package.dependencies]
-astroid = ">=3.3.8,<=3.4.0.dev0"
+astroid = ">=4.0.1,<=4.1.dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = {version = ">=0.3.7", markers = "python_version >= \"3.12\""}
-isort = ">=4.2.5,<5.13 || >5.13,<7"
+isort = ">=5,<5.13 || >5.13,<8"
 mccabe = ">=0.6,<0.8"
 platformdirs = ">=2.2"
 tomlkit = ">=0.10.1"
@@ -2654,4 +2654,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "977668b68c95e2434a89a93fc7e6684a275344115f499bea35125daa4cff79d2"
+content-hash = "3615754c5e506deec4f1baae60f2840928c133c7308b5ab003fcb808e61a5b43"
