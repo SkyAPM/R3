@@ -57,7 +57,7 @@ python = "^3.13"  # Gradio needs 3.8+
 grpcio = "<=1.75.1"
 grpcio-tools = "<=1.75.1"
 jsonpickle = "^4.1.1"
-cachetools = "^6.2.0"
+cachetools = "^6.2.1"
 nltk = "^3.9.2"
 inflect = "^7.5.0"
 pytest = "^8.4.2"
@@ -76,7 +76,7 @@ pyspellchecker = "^0.8.3"
 
 
 [tool.poetry.group.lint.dependencies]
-pylint = '3.3.9'
+pylint = '4.0.0'
 flake8 = "^7.3.0"
 # isort = "^5.10.1"
 unify = "^0.5"
@@ -93,7 +93,7 @@ flake8-2020 = "^1.7.0"
 
 
 [tool.poetry.group.demo.dependencies]
-gradio = "^5.49.0"
+gradio = "^5.49.1"
 
 [build-system]
 requires = ["poetry-core"]
