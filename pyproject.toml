@@ -76,7 +76,7 @@ pyspellchecker = "^0.8.3"
 
 
 [tool.poetry.group.lint.dependencies]
-pylint = '4.0.0'
+pylint = '4.0.1'
 flake8 = "^7.3.0"
 # isort = "^5.10.1"
 unify = "^0.5"
