@@ -54,8 +54,8 @@ generate-setup-file = true
 
 [tool.poetry.dependencies]
 python = "^3.13"  # Gradio needs 3.8+
-grpcio = "<=1.75.1"
-grpcio-tools = "<=1.75.1"
+grpcio = "<=1.76.0"
+grpcio-tools = "<=1.76.0"
 jsonpickle = "^4.1.1"
 cachetools = "^6.2.1"
 nltk = "^3.9.2"
@@ -76,7 +76,7 @@ pyspellchecker = "^0.8.3"
 
 
 [tool.poetry.group.lint.dependencies]
-pylint = '4.0.0'
+pylint = '4.0.2'
 flake8 = "^7.3.0"
 # isort = "^5.10.1"
 unify = "^0.5"
@@ -87,7 +87,7 @@ pep8-naming = "^0.15.1"
 darglint = "^1.8.1"
 flake8-eradicate = "^1.4.0"
 flake8-docstrings = "^1.6.0"
-flake8-bugbear = "^24.12.12"
+flake8-bugbear = "^25.10.21"
 flake8-comprehensions = "^3.17.0"
 flake8-2020 = "^1.7.0"
 
