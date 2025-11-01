@@ -23,9 +23,11 @@ patterns:
     - /api/v2/courses/{var}/modules/{var}/lessons
     - /api/v2/customers/{var}
     - /api/v3/products/{var}/reviews/{var}/comments
+    - /api/v3/providers/{var}
     - /api/v4/orders/{var}/items/{var}/tracking
     - /customer/{var}
     - /customer/{var}/order/{var}
     - ABC/{var}
+    - http://www.google.com/api/v1/users/{var}
     - www.google.com/api/v1/users/{var}
 version: '1'

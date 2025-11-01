@@ -37,6 +37,7 @@ Drain is the core algorithm of URI Drain.
 | extra_delimiters       | string     | DRAIN_EXTRA_DELIMITERS       | \["/"\] | The extra delimiters to split the sequence.                                                                                                                          |
 | analysis_min_url_count | int        | DRAIN_ANALYSIS_MIN_URL_COUNT | 20      | The minimum number of unique URLs(each service) to trigger the analysis.                                                                                             |
 | combine_min_url_count  | int        | DRAIN_COMBINE_MIN_URL_COUNT  | 3       | The minimum number of unique URLs(candidate of each service) to mask as variable URL(encase some similar URL are not restful, such as `/test/one` and `test/two`).   |
+| customized_words_file  | string     | DRAIN_CUSTOMIZED_WORDS_FILE  |         | The file path of customized words for analysis. Each line is a customized word.                                                                                      |
 
 ### Profiling
 
