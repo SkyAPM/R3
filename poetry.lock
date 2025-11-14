@@ -59,14 +59,14 @@ trio = ["trio (>=0.26.1)"]
 
 [[package]]
 name = "astroid"
-version = "4.0.1"
+version = "4.0.2"
 description = "An abstract syntax tree for Python with inference support."
 optional = false
 python-versions = ">=3.10.0"
 groups = ["lint"]
 files = [
-    {file = "astroid-4.0.1-py3-none-any.whl", hash = "sha256:37ab2f107d14dc173412327febf6c78d39590fdafcb44868f03b6c03452e3db0"},
-    {file = "astroid-4.0.1.tar.gz", hash = "sha256:0d778ec0def05b935e198412e62f9bcca8b3b5c39fdbe50b0ba074005e477aab"},
+    {file = "astroid-4.0.2-py3-none-any.whl", hash = "sha256:d7546c00a12efc32650b19a2bb66a153883185d3179ab0d4868086f807338b9b"},
+    {file = "astroid-4.0.2.tar.gz", hash = "sha256:ac8fb7ca1c08eb9afec91ccc23edbd8ac73bb22cbdd7da1d488d9fb8d6579070"},
 ]
 
 [[package]]
@@ -150,7 +150,7 @@ version = "1.2.0"
 description = "Python bindings for the Brotli compression library"
 optional = false
 python-versions = "*"
-groups = ["demo", "dev"]
+groups = ["demo"]
 files = [
     {file = "brotli-1.2.0-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:99cfa69813d79492f0e5d52a20fd18395bc82e671d5d40bd5a91d13e75e468e8"},
     {file = "brotli-1.2.0-cp27-cp27m-manylinux1_i686.whl", hash = "sha256:3ebe801e0f4e56d17cd386ca6600573e3706ce1845376307f5d2cbd32149b69a"},
@@ -256,14 +256,14 @@ files = [
 
 [[package]]
 name = "cachetools"
-version = "6.2.1"
+version = "6.2.2"
 description = "Extensible memoizing collections and decorators"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "cachetools-6.2.1-py3-none-any.whl", hash = "sha256:09868944b6dde876dfd44e1d47e18484541eaf12f26f29b7af91b26cc892d701"},
-    {file = "cachetools-6.2.1.tar.gz", hash = "sha256:3f391e4bd8f8bf0931169baf7456cc822705f4e2a31f840d218f445b9a854201"},
+    {file = "cachetools-6.2.2-py3-none-any.whl", hash = "sha256:6c09c98183bf58560c97b2abfcedcbaf6a896a490f534b031b661d3723b45ace"},
+    {file = "cachetools-6.2.2.tar.gz", hash = "sha256:8e6d266b25e539df852251cfd6f990b4bc3a141db73b939058d809ebd2590fc6"},
 ]
 
 [[package]]
@@ -1932,18 +1932,18 @@ windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "pylint"
-version = "4.0.2"
+version = "4.0.3"
 description = "python code static checker"
 optional = false
 python-versions = ">=3.10.0"
 groups = ["lint"]
 files = [
-    {file = "pylint-4.0.2-py3-none-any.whl", hash = "sha256:9627ccd129893fb8ee8e8010261cb13485daca83e61a6f854a85528ee579502d"},
-    {file = "pylint-4.0.2.tar.gz", hash = "sha256:9c22dfa52781d3b79ce86ab2463940f874921a3e5707bcfc98dd0c019945014e"},
+    {file = "pylint-4.0.3-py3-none-any.whl", hash = "sha256:896d09afb0e78bbf2e030cd1f3d8dc92771a51f7e46828cbc3948a89cd03433a"},
+    {file = "pylint-4.0.3.tar.gz", hash = "sha256:a427fe76e0e5355e9fb9b604fd106c419cafb395886ba7f3cebebb03f30e081d"},
 ]
 
 [package.dependencies]
-astroid = ">=4.0.1,<=4.1.dev0"
+astroid = ">=4.0.2,<=4.1.dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = {version = ">=0.3.7", markers = "python_version >= \"3.12\""}
 isort = ">=5,<5.13 || >5.13,<8"
@@ -1969,14 +1969,14 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "9.0.0"
+version = "9.0.1"
 description = "pytest: simple powerful testing with Python"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "pytest-9.0.0-py3-none-any.whl", hash = "sha256:e5ccdf10b0bac554970ee88fc1a4ad0ee5d221f8ef22321f9b7e4584e19d7f96"},
-    {file = "pytest-9.0.0.tar.gz", hash = "sha256:8f44522eafe4137b0f35c9ce3072931a788a21ee40a2ed279e817d3cc16ed21e"},
+    {file = "pytest-9.0.1-py3-none-any.whl", hash = "sha256:67be0030d194df2dfa7b556f2e56fb3c3315bd5c8822c6951162b92b32ce7dad"},
+    {file = "pytest-9.0.1.tar.gz", hash = "sha256:3e9c069ea73583e255c3b21cf46b8d3c56f6e3a1a8f6da94ccb0fcf57b9d73c8"},
 ]
 
 [package.dependencies]
@@ -2642,4 +2642,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "fbc28cbbf306cad39329195c79f0c9f4c31cc115cf152f72daed8da06ef7f5cb"
+content-hash = "5add3995c2c7ab225a321bd927eb9901c7976cf3ddadec1f29a042bfb6f70a3b"
