@@ -699,14 +699,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "6.0.0"
+version = "6.0.1"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-6.0.0-py3-none-any.whl", hash = "sha256:9790b871f827845378503fcf7b3bf9c9db03ba2a590a295516da4e6a63ea4a73"},
-    {file = "gradio-6.0.0.tar.gz", hash = "sha256:1f2217a7939dc1d8863431edc0026e0e07a54ead65c0402b3f71bba33f0d9515"},
+    {file = "gradio-6.0.1-py3-none-any.whl", hash = "sha256:0f98dc8b414a3f3773cbf3caf5a354507c8ae309ed8266e2f30ca9fa53f379b8"},
+    {file = "gradio-6.0.1.tar.gz", hash = "sha256:5d02e6ac34c67aea26b938b8628c8f9f504871392e71f2db559ab8d6799bdf69"},
 ]
 
 [package.dependencies]
@@ -716,7 +716,7 @@ audioop-lts = {version = "<1.0", markers = "python_version >= \"3.13\""}
 brotli = ">=1.1.0"
 fastapi = ">=0.115.2,<1.0"
 ffmpy = "*"
-gradio-client = "2.0.0-dev.3"
+gradio-client = "2.0.0"
 groovy = ">=0.1,<1.0"
 httpx = ">=0.24.1,<1.0"
 huggingface-hub = ">=0.33.5,<2.0"
@@ -726,7 +726,7 @@ numpy = ">=1.0,<3.0"
 orjson = ">=3.0,<4.0"
 packaging = "*"
 pandas = ">=1.0,<3.0"
-pillow = ">=8.0,<12.0"
+pillow = ">=8.0,<13.0"
 pydantic = ">=2.11.10,<=2.12.4"
 pydub = "*"
 python-multipart = ">=0.0.18"
@@ -745,14 +745,14 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "2.0.0.dev3"
+version = "2.0.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio_client-2.0.0.dev3-py3-none-any.whl", hash = "sha256:5d0055e831908e60323016b299bc8d4cd8dd0a75c99833e98301d1c171c00260"},
-    {file = "gradio_client-2.0.0.dev3.tar.gz", hash = "sha256:452efe90b4e245477c94bb09e5777f1712a406794a5cfbfb9b392e451bb337ad"},
+    {file = "gradio_client-2.0.0-py3-none-any.whl", hash = "sha256:77bedf20edcc232d8e7986c1a22165b2bbca1c7c7df10ba808a093d5180dae18"},
+    {file = "gradio_client-2.0.0.tar.gz", hash = "sha256:56b462183cb8741bd3e69b21db7d3b62c5abb03c2c2bb925223f1eb18f950e89"},
 ]
 
 [package.dependencies]
@@ -2548,4 +2548,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "679f04c1666a10100189e87c9837a33efa75a97d41fa3147885d03673d3de020"
+content-hash = "ce0150a1a442a15d886b740f9493c749a7e85d026991baf4a1e1a7a4d9deb2ef"
