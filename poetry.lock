@@ -534,14 +534,14 @@ flake8 = ">=5"
 
 [[package]]
 name = "flake8-bugbear"
-version = "25.10.21"
+version = "25.11.29"
 description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
 optional = false
 python-versions = ">=3.10"
 groups = ["lint"]
 files = [
-    {file = "flake8_bugbear-25.10.21-py3-none-any.whl", hash = "sha256:f1c5654f9d9d3e62e90da1f0335551fdbc565c51749713177dbcfb9edb105405"},
-    {file = "flake8_bugbear-25.10.21.tar.gz", hash = "sha256:2876afcaed8bfb3464cf33e3ec42cc3bec0a004165b84400dc3392b0547c2714"},
+    {file = "flake8_bugbear-25.11.29-py3-none-any.whl", hash = "sha256:9bf15e2970e736d2340da4c0a70493db964061c9c38f708cfe1f7b2d87392298"},
+    {file = "flake8_bugbear-25.11.29.tar.gz", hash = "sha256:b5d06710f3d26e595541ad303ad4d5cb52578bd4bccbb2c2c0b2c72e243dafc8"},
 ]
 
 [package.dependencies]
@@ -699,14 +699,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "6.0.1"
+version = "6.0.2"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-6.0.1-py3-none-any.whl", hash = "sha256:0f98dc8b414a3f3773cbf3caf5a354507c8ae309ed8266e2f30ca9fa53f379b8"},
-    {file = "gradio-6.0.1.tar.gz", hash = "sha256:5d02e6ac34c67aea26b938b8628c8f9f504871392e71f2db559ab8d6799bdf69"},
+    {file = "gradio-6.0.2-py3-none-any.whl", hash = "sha256:bcb8b9d147b313c958f811977527415cfd7871ee9547ccd92ef1911970c49a2c"},
+    {file = "gradio-6.0.2.tar.gz", hash = "sha256:e3bb128fd9247a49820048cfb8f5b677b59a0da24f6d81bc990ca1a20eb6d1fb"},
 ]
 
 [package.dependencies]
@@ -716,7 +716,7 @@ audioop-lts = {version = "<1.0", markers = "python_version >= \"3.13\""}
 brotli = ">=1.1.0"
 fastapi = ">=0.115.2,<1.0"
 ffmpy = "*"
-gradio-client = "2.0.0"
+gradio-client = "2.0.1"
 groovy = ">=0.1,<1.0"
 httpx = ">=0.24.1,<1.0"
 huggingface-hub = ">=0.33.5,<2.0"
@@ -745,14 +745,14 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "2.0.0"
+version = "2.0.1"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio_client-2.0.0-py3-none-any.whl", hash = "sha256:77bedf20edcc232d8e7986c1a22165b2bbca1c7c7df10ba808a093d5180dae18"},
-    {file = "gradio_client-2.0.0.tar.gz", hash = "sha256:56b462183cb8741bd3e69b21db7d3b62c5abb03c2c2bb925223f1eb18f950e89"},
+    {file = "gradio_client-2.0.1-py3-none-any.whl", hash = "sha256:6322eecb5963a07703306c0b048bb98518063d05ca99a65fe384417188af8c63"},
+    {file = "gradio_client-2.0.1.tar.gz", hash = "sha256:087eb50652370747c0ce66cd0ae79ecb49f9682188d5348e279d44602cbc2814"},
 ]
 
 [package.dependencies]
@@ -1930,14 +1930,14 @@ windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "pylint"
-version = "4.0.3"
+version = "4.0.4"
 description = "python code static checker"
 optional = false
 python-versions = ">=3.10.0"
 groups = ["lint"]
 files = [
-    {file = "pylint-4.0.3-py3-none-any.whl", hash = "sha256:896d09afb0e78bbf2e030cd1f3d8dc92771a51f7e46828cbc3948a89cd03433a"},
-    {file = "pylint-4.0.3.tar.gz", hash = "sha256:a427fe76e0e5355e9fb9b604fd106c419cafb395886ba7f3cebebb03f30e081d"},
+    {file = "pylint-4.0.4-py3-none-any.whl", hash = "sha256:63e06a37d5922555ee2c20963eb42559918c20bd2b21244e4ef426e7c43b92e0"},
+    {file = "pylint-4.0.4.tar.gz", hash = "sha256:d9b71674e19b1c36d79265b5887bf8e55278cbe236c9e95d22dc82cf044fdbd2"},
 ]
 
 [package.dependencies]
@@ -1955,14 +1955,14 @@ testutils = ["gitpython (>3)"]
 
 [[package]]
 name = "pyspellchecker"
-version = "0.8.3"
+version = "0.8.4"
 description = "Pure python spell checker based on work by Peter Norvig"
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "pyspellchecker-0.8.3-py3-none-any.whl", hash = "sha256:e993076e98b0da5a99b7cc31085c3022c77a9dc37c5e95f5cf6304b5dbb8b9d2"},
-    {file = "pyspellchecker-0.8.3.tar.gz", hash = "sha256:cb06eeafe124837f321e0d02f8e21deab713e966e28e0360319a28a089c43978"},
+    {file = "pyspellchecker-0.8.4-py3-none-any.whl", hash = "sha256:20c53d119568011bbaef68608aceb956b888bcd9d563798f7770721a112b8255"},
+    {file = "pyspellchecker-0.8.4.tar.gz", hash = "sha256:48cafa76d65c30ce4d81d0831938f25e8f34ede243c1cc6840014b0eb51ad629"},
 ]
 
 [[package]]
@@ -2548,4 +2548,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "ce0150a1a442a15d886b740f9493c749a7e85d026991baf4a1e1a7a4d9deb2ef"
+content-hash = "1aa3e4d587bbb2d56ac2369b5967e283ac48c7d33117a653fd79d8408ac90d28"
