@@ -48,6 +48,16 @@ Profiling is used to enable the profiling of the algorithm.
 | enabled    | bool        | PROFILING_ENABLED    | False   | Whether to enable the profiling.                  |
 | report_sec | int(second) | PROFILING_REPORT_SEC | 30      | The interval to report the profiling information. |
 
+### Logging
+
+Logging configuration controls the verbosity of application logs.
+
+| Name      | Type   | Environment Key | Default | Description                                                                                                                |
+|-----------|--------|-----------------|---------|---------------------------------------------------------------------------------------------------------------------------|
+| log_level | string | LOG_LEVEL       | INFO    | The logging level for the application. Valid values: DEBUG, INFO, WARNING, ERROR, CRITICAL. Use ERROR in production to reduce log volume. |
+
+> **Note**: In production environments, setting `LOG_LEVEL=ERROR` is recommended to prevent excessive log accumulation, which can lead to significant disk space consumption in Docker containers over time.
+
 ## Configuration with Environment Variables
 
 In the configuration, you can see that most of the configurations are in the format `${xxx:config_value}`.

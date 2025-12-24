@@ -22,7 +22,7 @@ from servers.simple.results_manager import ProxyURIDrainResultsManager, URIDrain
 from servers.simple.server import run_server
 from servers.simple.worker import run_worker
 
-logger = logger.init_logger(logging_level='INFO', name=__name__)
+logger = logger.init_logger(name=__name__)
 
 
 def run():
