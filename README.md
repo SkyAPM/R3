@@ -33,9 +33,24 @@ python -m servers.simple.run
 
 To deploy as a container:
 
-```
+```bash
 docker run -d --name r3 -p 17128:17128 r3:latest 
 ```
+
+#### Environment Variables
+
+R3 supports configuration through environment variables. Key variables include:
+
+- **`LOG_LEVEL`**: Controls logging verbosity (default: `INFO`)
+  - Valid values: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`
+  - **Production recommendation**: Set to `ERROR` to minimize log volume and prevent disk space issues in Docker containers
+  - Example: `docker run -d --name r3 -e LOG_LEVEL=ERROR -p 17128:17128 r3:latest`
+
+- **`DRAIN_SIM_TH`**: Similarity threshold for clustering (default: `0.4`)
+- **`DRAIN_ANALYSIS_MIN_URL_COUNT`**: Minimum URLs to trigger analysis (default: `20`)
+- **`SNAPSHOT_FILE_PATH`**: Directory for snapshot persistence (default: `/tmp/`)
+
+For a complete list of configuration options, see [Configuration](models/Configuration.md).
 
 ### Demo
 
