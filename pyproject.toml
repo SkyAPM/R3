@@ -93,7 +93,7 @@ flake8-2020 = "^1.7.0"
 
 
 [tool.poetry.group.demo.dependencies]
-gradio = "^6.2.0"
+gradio = "^6.3.0"
 
 [build-system]
 requires = ["poetry-core"]
