@@ -256,14 +256,14 @@ files = [
 
 [[package]]
 name = "cachetools"
-version = "6.2.4"
+version = "6.2.5"
 description = "Extensible memoizing collections and decorators"
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "cachetools-6.2.4-py3-none-any.whl", hash = "sha256:69a7a52634fed8b8bf6e24a050fb60bff1c9bd8f6d24572b99c32d4e71e62a51"},
-    {file = "cachetools-6.2.4.tar.gz", hash = "sha256:82c5c05585e70b6ba2d3ae09ea60b79548872185d2f24ae1f2709d37299fd607"},
+    {file = "cachetools-6.2.5-py3-none-any.whl", hash = "sha256:db3ae5465e90befb7c74720dd9308d77a09b7cf13433570e07caa0845c30d5fe"},
+    {file = "cachetools-6.2.5.tar.gz", hash = "sha256:6d8bfbba1ba94412fb9d9196c4da7a87e9d4928fffc5e93542965dca4740c77f"},
 ]
 
 [[package]]
@@ -699,14 +699,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "6.2.0"
+version = "6.4.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-6.2.0-py3-none-any.whl", hash = "sha256:65bcd9e26e77e9be8d688abdb18351d3f537ed16418c4274a513f280894317ed"},
-    {file = "gradio-6.2.0.tar.gz", hash = "sha256:f4f1d7407d5179ac3917ffb2f40545c6c23146bde4257b0bd5110e7b5e862e5b"},
+    {file = "gradio-6.4.0-py3-none-any.whl", hash = "sha256:4038e16b0561f8002a2769c281873b7cedff9c44ea0f1eba55f08d97bfec07a6"},
+    {file = "gradio-6.4.0.tar.gz", hash = "sha256:9d01fe8ebbde2c172c6b6f8eab96f70d15b816137a9aefb920903b8b10a096c9"},
 ]
 
 [package.dependencies]
@@ -716,7 +716,7 @@ audioop-lts = {version = "<1.0", markers = "python_version >= \"3.13\""}
 brotli = ">=1.1.0"
 fastapi = ">=0.115.2,<1.0"
 ffmpy = "*"
-gradio-client = "2.0.2"
+gradio-client = "2.0.3"
 groovy = ">=0.1,<1.0"
 httpx = ">=0.24.1,<1.0"
 huggingface-hub = ">=0.33.5,<2.0"
@@ -745,14 +745,14 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "2.0.2"
+version = "2.0.3"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio_client-2.0.2-py3-none-any.whl", hash = "sha256:46a7f63eaa7758fe2e38be7f78f26a1fff48a7b526ebdd87141b050e08556622"},
-    {file = "gradio_client-2.0.2.tar.gz", hash = "sha256:9800a3cead74881ffb3b0d6b731ea4a8e3c52d2ba63d5ab350e30db53566d4bf"},
+    {file = "gradio_client-2.0.3-py3-none-any.whl", hash = "sha256:bcc88da74e3a387bcd41535578abbafe2091bcf4715c9542111804741b9e50b0"},
+    {file = "gradio_client-2.0.3.tar.gz", hash = "sha256:8f1cec02dccaf64ac0285ed60479a2b0db3778dfe74c85a36d7ec9a95daeccc4"},
 ]
 
 [package.dependencies]
@@ -2548,4 +2548,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "e663e89e047662b384128a76a0e1d1ffade2f2653fa2393acffb583fde3e3c29"
+content-hash = "60d3823062d5768bab234e33245c8f168d43644110b8bbe7871b2f9060ac7a76"
