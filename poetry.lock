@@ -256,14 +256,14 @@ files = [
 
 [[package]]
 name = "cachetools"
-version = "7.0.1"
+version = "7.0.2"
 description = "Extensible memoizing collections and decorators"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "cachetools-7.0.1-py3-none-any.whl", hash = "sha256:8f086515c254d5664ae2146d14fc7f65c9a4bce75152eb247e5a9c5e6d7b2ecf"},
-    {file = "cachetools-7.0.1.tar.gz", hash = "sha256:e31e579d2c5b6e2944177a0397150d312888ddf4e16e12f1016068f0c03b8341"},
+    {file = "cachetools-7.0.2-py3-none-any.whl", hash = "sha256:938dcad184827c5e94928c4fd5526e2b46692b7fb1ae94472da9131d0299343c"},
+    {file = "cachetools-7.0.2.tar.gz", hash = "sha256:7e7f09a4ca8b791d8bb4864afc71e9c17e607a28e6839ca1a644253c97dbeae0"},
 ]
 
 [[package]]
@@ -699,14 +699,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "6.7.0"
+version = "6.8.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-6.7.0-py3-none-any.whl", hash = "sha256:940076fac276454926e663059b6d43fd2d9eeea4a56bf4231d0215d6a851882c"},
-    {file = "gradio-6.7.0.tar.gz", hash = "sha256:a0a7e911571f00163a35a0d9b6811a444f7bf4c95cfd294eb506a3c054e9fa66"},
+    {file = "gradio-6.8.0-py3-none-any.whl", hash = "sha256:1ece9f3d075bec3da5a6e69c77fa03ddcf3b14af56a9ca843a499406c2b3afd6"},
+    {file = "gradio-6.8.0.tar.gz", hash = "sha256:79154e7b77ff2deb4570e94eba9a900b7b9495121e24376c2f6cfa30fee1b92d"},
 ]
 
 [package.dependencies]
@@ -2561,4 +2561,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "698eda86b619536e70296219d3f757f4d5b44191474a19986b606411431e14a2"
+content-hash = "b4396cbbb072f7fd8b6201bb9159676c497b34f948b6c17a2435422fdb802610"
