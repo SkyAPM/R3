@@ -17,6 +17,8 @@ FROM python:3.13-slim as final
 
 ENV PYTHONUNBUFFERED=1
 
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Copy the necessary files into the container
