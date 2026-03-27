@@ -17,6 +17,8 @@ FROM python:3.13-slim as final
 
 ENV PYTHONUNBUFFERED=1
 
+# Upgrade OS packages to pick up security patches:
+# CVE-2025-15281, CVE-2026-0861, CVE-2026-0915 (glibc), CVE-2026-2219 (dpkg), CVE-2025-7709 (libsqlite3)
 RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
