@@ -19,6 +19,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Upgrade OS packages to pick up security patches:
 # CVE-2025-15281, CVE-2026-0861, CVE-2026-0915 (glibc), CVE-2026-2219 (dpkg), CVE-2025-7709 (libsqlite3)
+# CVE-2026-40226, CVE-2026-40228 (systemd), CVE-2026-27456 (util-linux), CVE-2025-6141 (ncurses), CVE-2026-5704 (tar)
 RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
