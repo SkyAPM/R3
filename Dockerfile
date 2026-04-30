@@ -21,6 +21,7 @@ ENV PYTHONUNBUFFERED=1
 # CVE-2025-15281, CVE-2026-0861, CVE-2026-0915 (glibc), CVE-2026-2219 (dpkg), CVE-2025-7709 (libsqlite3)
 # CVE-2026-40226, CVE-2026-40228 (systemd), CVE-2026-27456 (util-linux), CVE-2025-6141 (ncurses), CVE-2026-5704 (tar)
 # CVE-2026-2673, CVE-2026-28387, CVE-2026-28388 (openssl 3.5.5-1~deb13u2), CVE-2026-34743 (xz-utils 5.8.3)
+# CVE-2026-5435, CVE-2026-6238 (glibc)
 RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
