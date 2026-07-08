@@ -58,7 +58,7 @@ grpcio = "<=1.82.0"
 grpcio-tools = "<=1.82.0"
 jsonpickle = "^4.1.2"
 cachetools = "^7.1.4"
-nltk = "^3.9.4"
+nltk = "^3.10.0"
 inflect = "^7.5.0"
 pytest = "^9.1.1"
 pygments = ">=2.20.0"
@@ -94,7 +94,7 @@ flake8-2020 = "^1.7.0"
 
 
 [tool.poetry.group.demo.dependencies]
-gradio = "^6.19.0"
+gradio = "^6.20.0"
 
 [build-system]
 requires = ["poetry-core"]
