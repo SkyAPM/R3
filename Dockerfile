@@ -20,10 +20,13 @@ ENV PYTHONUNBUFFERED=1
 # Upgrade OS packages to pick up security patches:
 # CVE-2025-15281, CVE-2026-0861, CVE-2026-0915 (glibc), CVE-2026-2219 (dpkg), CVE-2025-7709 (libsqlite3)
 # CVE-2026-40226, CVE-2026-40228 (systemd), CVE-2026-27456 (util-linux), CVE-2025-6141 (ncurses), CVE-2026-5704 (tar)
-# CVE-2026-2673, CVE-2026-28387, CVE-2026-28388 (openssl 3.5.5-1~deb13u2), CVE-2026-34743 (xz-utils 5.8.3)
+# CVE-2026-2673, CVE-2026-28387, CVE-2026-28388 (openssl 3.5.5-1~deb13u2)
 # CVE-2026-34183, CVE-2026-42769, CVE-2026-34181, CVE-2026-42768 (openssl 3.5.6-1~deb13u2)
+# CVE-2026-34743 (xz-utils/liblzma5 5.8.1-1+deb13u1)
+# NOTE: `apt-get upgrade` only upgrades the packages explicitly named below, so every
+# package that carries a security fix must be listed here.
 RUN apt-get update && apt-get upgrade -y \
-    openssl libssl3t64 openssl-provider-legacy \
+    openssl libssl3t64 openssl-provider-legacy liblzma5 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
