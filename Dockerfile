@@ -36,9 +36,9 @@ COPY . /app
 
 # Build the project with make
 # Upgrade pip to >=26.1.2 to fix CVE-2026-6357, CVE-2026-8643
-# Upgrade setuptools to >=80.10.2 to fix CVE-2026-23949, CVE-2026-24049
+# Upgrade setuptools to >=83.0.0 to fix CVE-2026-23949, CVE-2026-24049, CVE-2026-59890
 # Upgrade click to >=8.3.3 to fix CVE-2026-7246
-RUN python3 -m pip install "pip>=26.1.2" "setuptools>=80.10.2" \
+RUN python3 -m pip install "pip>=26.1.2" "setuptools>=83.0.0" \
   && python3 -m pip install grpcio-tools==1.80.0 packaging \
 	&& python3 -m tools.grpc_gen \
   && python3 -m pip install .[all] "click>=8.3.3"
