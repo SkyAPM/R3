@@ -38,10 +38,11 @@ COPY . /app
 # Upgrade pip to >=26.2 to fix CVE-2026-6357, CVE-2026-8643, CVE-2026-13346
 # Upgrade setuptools to >=83.0.0 to fix CVE-2026-23949, CVE-2026-24049, CVE-2026-59890
 # Upgrade click to >=8.3.3 to fix CVE-2026-7246
+# Upgrade msgpack to >=1.2.1 to fix CVE-2026-57585, GHSA-6v7p-g79w-8964
 RUN python3 -m pip install "pip>=26.2" "setuptools>=83.0.0" \
   && python3 -m pip install grpcio-tools==1.80.0 packaging \
 	&& python3 -m tools.grpc_gen \
-  && python3 -m pip install .[all] "click>=8.3.3"
+  && python3 -m pip install .[all] "click>=8.3.3" "msgpack>=1.2.1"
 
 # Expose the gRPC service port
 EXPOSE 17128
