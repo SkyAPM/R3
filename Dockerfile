@@ -22,9 +22,12 @@ ENV PYTHONUNBUFFERED=1
 # CVE-2026-40226, CVE-2026-40228 (systemd), CVE-2025-6141 (ncurses), CVE-2026-5704 (tar)
 # CVE-2026-2673, CVE-2026-28387, CVE-2026-28388 (openssl 3.5.5-1~deb13u2)
 # CVE-2026-34183, CVE-2026-42769, CVE-2026-34181, CVE-2026-42768 (openssl 3.5.6-1~deb13u2)
+# CVE-2026-63073, CVE-2026-63076, CVE-2026-63072, CVE-2026-54874, CVE-2026-63074,
+# CVE-2026-14456, CVE-2026-63075, CVE-2026-56864, CVE-2026-75803 (openssl 3.5.7-1~deb13u2)
 # CVE-2026-34743 (xz-utils/liblzma5 5.8.1-1+deb13u1)
 # CVE-2026-13595, CVE-2026-27456, CVE-2026-53612, CVE-2026-53613, CVE-2026-53614,
 # CVE-2026-53615 (util-linux family 2.41.5-0+deb13u1)
+# CVE-2025-14104 (util-linux 2.41.3-1, already satisfied by 2.41.5-0+deb13u1)
 # NOTE: `apt-get upgrade` only upgrades the packages explicitly named below, so every
 # package that carries a security fix must be listed here.
 RUN apt-get update && apt-get upgrade -y \
