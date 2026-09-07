@@ -51,6 +51,25 @@ RUN python3 -m pip install "pip>=26.2" "setuptools>=83.0.0" \
 	&& python3 -m tools.grpc_gen \
   && python3 -m pip install .[all] "click>=8.3.3" "msgpack>=1.2.1"
 
+# Replace pip's vendored msgpack (1.1.2 in pip 26.x) with >=1.2.1 to fix GHSA-6v7p-g79w-8964.
+# pip vendors msgpack in its own _vendor directory for internal cache operations; a regular
+# `pip install msgpack` does not upgrade this copy. We install msgpack>=1.2.1 to a temp dir,
+# overwrite pip's vendor copy, clear the stale bytecode cache, and update pip's CycloneDX SBOM.
+RUN pip install --target=/tmp/msgpack-vendor --no-deps "msgpack>=1.2.1" \
+  && VENDOR_DIR=/usr/local/lib/python3.13/site-packages/pip/_vendor \
+  && rm -rf "${VENDOR_DIR}/msgpack/__pycache__" \
+  && cp /tmp/msgpack-vendor/msgpack/*.py "${VENDOR_DIR}/msgpack/" \
+  && python3 -c "\
+import json, sys, importlib.util; \
+spec = importlib.util.spec_from_file_location('msgpack', '/tmp/msgpack-vendor/msgpack/__init__.py'); \
+m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); \
+v = m.__version__; \
+bom_path = '/usr/local/lib/python3.13/site-packages/pip/_vendor/bom.cdx.json'; \
+data = json.loads(open(bom_path).read()); \
+[c.update({'version': v, 'purl': f'pkg:pypi/msgpack@{v}', 'bom-ref': f'pkg:pypi/msgpack@{v}'}) or sys.stderr.write(f'Patched pip vendor msgpack to {v}\n') for c in data.get('components', []) if c.get('name') == 'msgpack']; \
+open(bom_path, 'w').write(json.dumps(data, separators=(',', ':')))" \
+  && rm -rf /tmp/msgpack-vendor
+
 # Patch pip's internal vendor SBOM (bom.cdx.json) to reflect the upgraded setuptools version.
 # pip bundles a CycloneDX SBOM of its vendored build dependencies; the base Python image ships
 # pip with setuptools@70.3.0 recorded there. After upgrading setuptools above we update this
