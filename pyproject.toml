@@ -88,13 +88,13 @@ pep8-naming = "^0.15.1"
 darglint = "^1.8.1"
 flake8-eradicate = "^1.4.0"
 flake8-docstrings = "^1.6.0"
-flake8-bugbear = "^25.11.29"
+flake8-bugbear = "^26.9.9"
 flake8-comprehensions = "^3.17.0"
 flake8-2020 = "^1.7.0"
 
 
 [tool.poetry.group.demo.dependencies]
-gradio = "^6.26.0"
+gradio = "^6.27.0"
 
 [build-system]
 requires = ["poetry-core"]
