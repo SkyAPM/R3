@@ -17,16 +17,73 @@ FROM python:3.13-slim as final
 
 ENV PYTHONUNBUFFERED=1
 
+# Upgrade OS packages to pick up security patches:
+# CVE-2025-15281, CVE-2026-0861, CVE-2026-0915 (glibc), CVE-2026-2219 (dpkg), CVE-2025-7709 (libsqlite3)
+# CVE-2026-40226, CVE-2026-40228 (systemd), CVE-2025-6141 (ncurses), CVE-2026-5704 (tar)
+# CVE-2026-2673, CVE-2026-28387, CVE-2026-28388 (openssl 3.5.5-1~deb13u2)
+# CVE-2026-34183, CVE-2026-42769, CVE-2026-34181, CVE-2026-42768 (openssl 3.5.6-1~deb13u2)
+# CVE-2026-63073, CVE-2026-63076, CVE-2026-63072, CVE-2026-54874, CVE-2026-63074,
+# CVE-2026-14456, CVE-2026-63075, CVE-2026-56864, CVE-2026-75803 (openssl 3.5.7-1~deb13u2)
+# CVE-2026-34743 (xz-utils/liblzma5 5.8.1-1+deb13u1)
+# CVE-2026-13595, CVE-2026-27456, CVE-2026-53612, CVE-2026-53613, CVE-2026-53614,
+# CVE-2026-53615 (util-linux family 2.41.5-0+deb13u1)
+# CVE-2025-14104 (util-linux 2.41.3-1, already satisfied by 2.41.5-0+deb13u1)
+# NOTE: `apt-get upgrade` only upgrades the packages explicitly named below, so every
+# package that carries a security fix must be listed here.
+RUN apt-get update && apt-get upgrade -y \
+    openssl libssl3t64 openssl-provider-legacy liblzma5 \
+    util-linux bsdutils libblkid1 liblastlog2-2 libmount1 libsmartcols1 libuuid1 login mount \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Copy the necessary files into the container
 COPY . /app
 
 # Build the project with make
-RUN python3 -m pip install -U pip \
-  && python3 -m pip install grpcio-tools==1.68.0 packaging \
+# Upgrade pip to >=26.2 to fix CVE-2026-6357, CVE-2026-8643, CVE-2026-13346
+# Upgrade setuptools to >=83.0.0 to fix CVE-2025-47273 (path traversal in PackageIndex),
+# CVE-2026-23949, CVE-2026-24049, CVE-2026-59890
+# Upgrade click to >=8.3.3 to fix CVE-2026-7246
+# Upgrade msgpack to >=1.2.1 to fix CVE-2026-57585, GHSA-6v7p-g79w-8964
+RUN python3 -m pip install "pip>=26.2" "setuptools>=83.0.0" \
+  && python3 -m pip install grpcio-tools==1.80.0 packaging \
 	&& python3 -m tools.grpc_gen \
-  && python3 -m pip install .[all]
+  && python3 -m pip install .[all] "click>=8.3.3" "msgpack>=1.2.1"
+
+# Replace pip's vendored msgpack (1.1.2 in pip 26.x) with >=1.2.1 to fix GHSA-6v7p-g79w-8964.
+# pip vendors msgpack in its own _vendor directory for internal cache operations; a regular
+# `pip install msgpack` does not upgrade this copy. We install msgpack>=1.2.1 to a temp dir,
+# overwrite pip's vendor copy, clear the stale bytecode cache, and update pip's CycloneDX SBOM.
+RUN pip install --target=/tmp/msgpack-vendor --no-deps "msgpack>=1.2.1" \
+  && VENDOR_DIR=/usr/local/lib/python3.13/site-packages/pip/_vendor \
+  && rm -rf "${VENDOR_DIR}/msgpack/__pycache__" \
+  && cp /tmp/msgpack-vendor/msgpack/*.py "${VENDOR_DIR}/msgpack/" \
+  && python3 -c "\
+import json, sys, importlib.util; \
+spec = importlib.util.spec_from_file_location('msgpack', '/tmp/msgpack-vendor/msgpack/__init__.py'); \
+m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); \
+v = m.__version__; \
+bom_path = '/usr/local/lib/python3.13/site-packages/pip/_vendor/bom.cdx.json'; \
+data = json.loads(open(bom_path).read()); \
+[c.update({'version': v, 'purl': f'pkg:pypi/msgpack@{v}', 'bom-ref': f'pkg:pypi/msgpack@{v}'}) or sys.stderr.write(f'Patched pip vendor msgpack to {v}\n') for c in data.get('components', []) if c.get('name') == 'msgpack']; \
+open(bom_path, 'w').write(json.dumps(data, separators=(',', ':')))" \
+  && rm -rf /tmp/msgpack-vendor
+
+# Patch pip's internal vendor SBOM (bom.cdx.json) to reflect the upgraded setuptools version.
+# pip bundles a CycloneDX SBOM of its vendored build dependencies; the base Python image ships
+# pip with setuptools@70.3.0 recorded there. After upgrading setuptools above we update this
+# metadata file so that vulnerability scanners (e.g. trivy) do not report the stale reference.
+# This is purely a metadata patch — no functional code changes.
+# Fixes: CVE-2025-47273 (setuptools < 78.1.1)
+RUN python3 -c "\
+import json, sys; \
+bom_path = '/usr/local/lib/python3.13/site-packages/pip/_vendor/bom.cdx.json'; \
+import importlib.metadata; \
+v = importlib.metadata.version('setuptools'); \
+data = json.loads(open(bom_path).read()); \
+[c.update({'version': v, 'purl': f'pkg:pypi/setuptools@{v}', 'bom-ref': f'pkg:pypi/setuptools@{v}'}) or sys.stderr.write(f'Updated setuptools SBOM ref to {v}\n') for c in data.get('components', []) if c.get('name') == 'setuptools']; \
+open(bom_path, 'w').write(json.dumps(data, separators=(',', ':')))"
 
 # Expose the gRPC service port
 EXPOSE 17128

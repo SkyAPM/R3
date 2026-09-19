@@ -63,5 +63,7 @@ services:
       - manual
     ports:
         - "17128:17128"
+    environment:
+      - LOG_LEVEL=ERROR
 networks:
   manual:

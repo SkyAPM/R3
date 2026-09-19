@@ -30,15 +30,21 @@ def get_logger(name=None):  # noqa
     return _logger
 
 
-def init_logger(logging_level='INFO', name=__name__):
+def init_logger(logging_level=None, name=__name__):
     """
     Initialize the logger given a logging level and a name.
     :param name: name of the caller
-    :param logging_level: level of the logger
+    :param logging_level: level of the logger. If None, reads from LOG_LEVEL environment variable (default: 'INFO')
     :return:
     >>> init_logger()
     <Logger logger (INFO)>
     """
+    import os
+    
+    # If logging_level is not provided, read from environment variable
+    if logging_level is None:
+        logging_level = os.getenv('LOG_LEVEL', 'INFO').upper()
+    
     logger = get_logger(name=name)
 
     global logger_debug_enabled
