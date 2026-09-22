@@ -578,14 +578,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "6.27.0"
+version = "6.28.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-6.27.0-py3-none-any.whl", hash = "sha256:6f4b9057c4a771283caa35a80dfdb3f599b5732108591fe9dcc32689cda17b68"},
-    {file = "gradio-6.27.0.tar.gz", hash = "sha256:b7212b021c2a7a2f6f1e31341783ba7ab2679bbd286e2956f7e6c701348daf92"},
+    {file = "gradio-6.28.0-py3-none-any.whl", hash = "sha256:565416ce193f52ef7937e11fda9c78092e9e039b28a721dac27c0cd96fb0615e"},
+    {file = "gradio-6.28.0.tar.gz", hash = "sha256:2ff6d505a1a631a5a4b20626cd7c2b9a202b9a479698af4049f6874102e86266"},
 ]
 
 [package.dependencies]
@@ -593,7 +593,7 @@ anyio = ">=3.0,<5.0"
 audioop-lts = {version = "<=0.2.2", markers = "python_version >= \"3.13\""}
 brotli = ">=1.1.0"
 fastapi = ">=0.115.2,<1.0"
-gradio-client = "2.7.0"
+gradio-client = "2.7.1"
 groovy = ">=0.1,<1.0"
 hf-gradio = ">=0.4.1,<1.0"
 httpx = ">=0.24.1,<1.0"
@@ -624,14 +624,14 @@ oauth = ["authlib", "itsdangerous"]
 
 [[package]]
 name = "gradio-client"
-version = "2.7.0"
+version = "2.7.1"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio_client-2.7.0-py3-none-any.whl", hash = "sha256:1eccee1d2b387dc63b9b59124dd07e39cbe0ca7c90cc52ac4525074570b6365e"},
-    {file = "gradio_client-2.7.0.tar.gz", hash = "sha256:212c88f7f6a212c973b4429ec450b35efba7805a34aee53f0892535ceee194ae"},
+    {file = "gradio_client-2.7.1-py3-none-any.whl", hash = "sha256:b4f953212a66eeb7fa12d93fcf98fa90a0567c2c9c6a5fc2795610f7c71e21b5"},
+    {file = "gradio_client-2.7.1.tar.gz", hash = "sha256:2c629110496dbca67a848cd70add8cf5c3a24776404a2c5ef4fd759c7c2c33c4"},
 ]
 
 [package.dependencies]
@@ -2414,4 +2414,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "63b60094a0fddf5e47d160cdd1ba5395807d805f8d1ee59226c419fe067db9e2"
+content-hash = "f964f4c17c2da48d647fa8cebb5347a6e7b288bfef0173ccad4570545ddd34d1"
