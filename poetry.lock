@@ -241,14 +241,14 @@ files = [
 
 [[package]]
 name = "cachetools"
-version = "7.2.3"
+version = "7.2.4"
 description = "Extensible memoizing collections and decorators"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "cachetools-7.2.3-py3-none-any.whl", hash = "sha256:85ef9d2703918bedf7f88caa0b06bb3bb7a71360eb0b05c20796b89fede6e30c"},
-    {file = "cachetools-7.2.3.tar.gz", hash = "sha256:e6fafd06de4a5bd915ff7d247588ea497e28c9a568c62db8678d9a5f11515a9a"},
+    {file = "cachetools-7.2.4-py3-none-any.whl", hash = "sha256:4cfbebf3eec4040d2073b19c460511ad47eef7b852dbf9a0d385099b4dafa31e"},
+    {file = "cachetools-7.2.4.tar.gz", hash = "sha256:e0203b04b75fe13e62098eeb5b2018c4eb1a14c04e2b5b450e70db3ee7e92ec5"},
 ]
 
 [[package]]
@@ -257,7 +257,7 @@ version = "2026.10.19"
 description = "Python package for providing Mozilla's CA Bundle."
 optional = false
 python-versions = ">=3.7"
-groups = ["demo", "dev"]
+groups = ["demo"]
 files = [
     {file = "certifi-2026.10.19-py3-none-any.whl", hash = "sha256:42d35340cc5b9ba78e818ddbff0c5b1c2b779de448a340fd1b989f5fa8670e1b"},
     {file = "certifi-2026.10.19.tar.gz", hash = "sha256:035c1e85572b141bf1c3a3eff0e33a8eb74917522f2559075ff8d2fea780a1ae"},
@@ -2414,4 +2414,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "1be31cfa8aa4d4bcabb13c3c4a132abe276ad9e090d8a3989315f58458872446"
+content-hash = "cec707303bd190d7c8e038d0651e1706c81cd621c6405ab08e1722c81b289588"
