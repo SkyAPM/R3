@@ -57,7 +57,7 @@ python = "^3.13"  # Gradio needs 3.8+
 grpcio = "<=1.85.1"
 grpcio-tools = "<=1.85.1"
 jsonpickle = "^4.1.4"
-cachetools = "^7.3.0"
+cachetools = "^8.0.0"
 nltk = "^3.10.4"
 inflect = "^7.6.0"
 pytest = "^9.2.0"
