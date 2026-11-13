@@ -456,14 +456,14 @@ flake8 = ">=5"
 
 [[package]]
 name = "flake8-bugbear"
-version = "26.10.27"
+version = "26.11.9"
 description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["lint"]
 files = [
-    {file = "flake8_bugbear-26.10.27-py3-none-any.whl", hash = "sha256:84be4e7533f9e9e4c98c1fdadecddb9b527aaea32509f7779ce2e6ec79ba012d"},
-    {file = "flake8_bugbear-26.10.27.tar.gz", hash = "sha256:2dbacb5149856a38ff539f21098ec5f1b70d8ebe0c87fe107dacda28a2d83955"},
+    {file = "flake8_bugbear-26.11.9-py3-none-any.whl", hash = "sha256:4befd940ee978f654e6eb621292adfe05e7c3ae9756141feb0a5894d3d0bc2bc"},
+    {file = "flake8_bugbear-26.11.9.tar.gz", hash = "sha256:83e0aa29f57925b25f20cf6e675d822f0558f775f529858eb92a4ac63281f741"},
 ]
 
 [package.dependencies]
@@ -471,7 +471,7 @@ attrs = ">=22.2.0"
 flake8 = ">=7.2.0"
 
 [package.extras]
-dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "pre-commit", "pytest", "tox"]
+dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "mypy", "pre-commit", "pytest", "tox", "types-flake8"]
 
 [[package]]
 name = "flake8-comprehensions"
@@ -2477,4 +2477,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "98b669a228efda8ddf1f282bf169696190a9da769fbb2e1a5abe0b6a0b6a1269"
+content-hash = "10a8ff50225fac17a5e3442a8a1359160946476a63a6d0eb597cb460df6d4703"
