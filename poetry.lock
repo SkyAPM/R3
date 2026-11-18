@@ -456,14 +456,14 @@ flake8 = ">=5"
 
 [[package]]
 name = "flake8-bugbear"
-version = "26.10.27"
+version = "26.11.9"
 description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["lint"]
 files = [
-    {file = "flake8_bugbear-26.10.27-py3-none-any.whl", hash = "sha256:84be4e7533f9e9e4c98c1fdadecddb9b527aaea32509f7779ce2e6ec79ba012d"},
-    {file = "flake8_bugbear-26.10.27.tar.gz", hash = "sha256:2dbacb5149856a38ff539f21098ec5f1b70d8ebe0c87fe107dacda28a2d83955"},
+    {file = "flake8_bugbear-26.11.9-py3-none-any.whl", hash = "sha256:4befd940ee978f654e6eb621292adfe05e7c3ae9756141feb0a5894d3d0bc2bc"},
+    {file = "flake8_bugbear-26.11.9.tar.gz", hash = "sha256:83e0aa29f57925b25f20cf6e675d822f0558f775f529858eb92a4ac63281f741"},
 ]
 
 [package.dependencies]
@@ -471,7 +471,7 @@ attrs = ">=22.2.0"
 flake8 = ">=7.2.0"
 
 [package.extras]
-dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "pre-commit", "pytest", "tox"]
+dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "mypy", "pre-commit", "pytest", "tox", "types-flake8"]
 
 [[package]]
 name = "flake8-comprehensions"
@@ -621,14 +621,14 @@ tqdm = ["tqdm"]
 
 [[package]]
 name = "gradio"
-version = "6.31.0"
+version = "6.32.0"
 description = "Python library for easily interacting with trained machine learning models"
 optional = false
 python-versions = ">=3.10"
 groups = ["demo"]
 files = [
-    {file = "gradio-6.31.0-py3-none-any.whl", hash = "sha256:7b50b9b6a2d23cd02851ad4c8b1c8312c88d8b911d1f29c93f9761c98348a64a"},
-    {file = "gradio-6.31.0.tar.gz", hash = "sha256:40cf094fe8ea1b8ada0fc4c10b685c4c5f09c4061d34c073be25bab342e14e22"},
+    {file = "gradio-6.32.0-py3-none-any.whl", hash = "sha256:0d5170c3dfa445ee932979ecf0abac43a3814b603868d4d2c6efec5b5605372c"},
+    {file = "gradio-6.32.0.tar.gz", hash = "sha256:4a5250eaf622154a28217f5d18d50c01b1a949842e11ebe2b1f8055a2fc92849"},
 ]
 
 [package.dependencies]
@@ -647,7 +647,7 @@ numpy = ">=1.0,<3.0"
 orjson = ">=3.0,<4.0"
 packaging = "*"
 pandas = ">=1.0,<4.0"
-pillow = ">=8.0,<13.0"
+pillow = ">=8.0,<14.0"
 pydantic = ">=2.0,<=3.0"
 pydub = "<1.0"
 python-multipart = ">=0.0.18,<1.0"
@@ -2477,4 +2477,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.13"
-content-hash = "98b669a228efda8ddf1f282bf169696190a9da769fbb2e1a5abe0b6a0b6a1269"
+content-hash = "190b491f6c7b845c01a9e7ca933b7556fb7c79c87f3aafbc06a06f8fe05f864c"
