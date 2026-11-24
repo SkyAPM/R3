@@ -54,10 +54,10 @@ generate-setup-file = true
 
 [tool.poetry.dependencies]
 python = "^3.13"  # Gradio needs 3.8+
-grpcio = "<=1.85.1"
-grpcio-tools = "<=1.85.1"
+grpcio = "<=1.85.3"
+grpcio-tools = "<=1.85.3"
 jsonpickle = "^4.1.4"
-cachetools = "^8.0.0"
+cachetools = "^8.0.2"
 nltk = "^3.10.4"
 inflect = "^7.6.0"
 pytest = "^9.2.0"
